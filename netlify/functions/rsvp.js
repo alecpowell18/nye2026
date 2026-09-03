@@ -15,6 +15,13 @@ exports.handler = async (event) => {
   const { name, attending, partySize, dietary, songRequest } = data;
   if (!name) return { statusCode: 400, body: 'Missing name' };
 
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT) {
+    return { statusCode: 500, body: JSON.stringify({ error: 'GOOGLE_SERVICE_ACCOUNT env var is not set' }) };
+  }
+  if (!process.env.SHEET_ID) {
+    return { statusCode: 500, body: JSON.stringify({ error: 'SHEET_ID env var is not set' }) };
+  }
+
   try {
     const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
     const auth = new google.auth.GoogleAuth({
@@ -49,7 +56,8 @@ exports.handler = async (event) => {
     console.error('Sheets error:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to save RSVP' }),
+      // TEMP: surfacing real error for debugging — revert to a generic message once resolved
+      body: JSON.stringify({ error: 'Failed to save RSVP', detail: err.message, response: err.response?.data }),
     };
   }
 };
