@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alec & Sylvia's New Years Special</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;700;900&family=Playfair+Display:ital,wght@0,300;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #b89660;
+  --gold-light: #d4b483;
+  --silver: #b8b8c4;
+  --w80: rgba(255,255,255,0.80);
+  --w50: rgba(255,255,255,0.50);
+  --w30: rgba(255,255,255,0.30);
+  --w15: rgba(255,255,255,0.15);
+  --w08: rgba(255,255,255,0.08);
+  --w05: rgba(255,255,255,0.05);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Tenor Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── HERO ─────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem 5rem;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 35%;
+  opacity: 0.32; filter: saturate(0.5) brightness(0.7);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.0) 25%,
+    rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.90) 85%, rgba(0,0,0,1) 100%);
+}
+#sparkles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.hero-inner { position: relative; z-index: 2; }
+
+.hero-pre {
+  font-size: 8px; letter-spacing: 0.6em; text-transform: uppercase;
+  color: var(--w50); margin-bottom: 2.2rem;
+}
+.hero-name {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(80px, 24vw, 140px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.02em; color: #fff; display: block;
+  line-height: 0.85;
+}
+.hero-amp {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 8vw, 52px); font-weight: 300; font-style: italic;
+  color: var(--gold); display: block; margin: 0.15em 0; line-height: 1;
+}
+.hero-tag {
+  font-size: 9px; letter-spacing: 0.65em; text-transform: uppercase;
+  color: var(--gold); margin-top: 1.6rem; margin-bottom: 2.4rem; opacity: 0.85;
+}
+.date-row {
+  display: inline-flex; align-items: stretch;
+  border: 0.5px solid var(--w15); margin-bottom: 1.2rem;
+}
+.date-cell {
+  padding: 0.7rem 1.2rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+}
+.date-cell + .date-cell { border-left: 0.5px solid var(--w15); }
+.dc-label { font-size: 7px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
+.dc-val {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(28px, 8vw, 46px); font-weight: 700; color: #fff; line-height: 1;
+}
+.hero-venue { font-size: 8px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); margin-top: 0.4rem; }
+
+/* ── COUNTDOWN ─────────────────────────── */
+.sec-countdown { background: #080808; padding: 5.5rem 2rem; text-align: center; }
+.sec-accent {
+  font-family: 'Playfair Display', serif; font-size: clamp(20px, 6vw, 34px);
+  font-weight: 300; font-style: italic; color: var(--w30); display: block; line-height: 1;
+}
+.sec-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(52px, 16vw, 100px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.03em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
+}
+.cd-wrap {
+  display: flex; align-items: flex-start; justify-content: center;
+  gap: clamp(4px, 2vw, 12px);
+}
+.cd-unit { text-align: center; }
+.cd-num {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(44px, 13vw, 80px); font-weight: 700; color: #fff; line-height: 1;
+  display: block; min-width: clamp(50px, 14vw, 90px);
+}
+.cd-lbl { font-size: 7px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--w30); margin-top: 5px; }
+.cd-colon {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(36px, 10vw, 60px); font-weight: 300;
+  color: var(--gold); opacity: 0.6; line-height: 1; align-self: flex-start; padding-top: 5px;
+}
+.cd-tagline { margin-top: 2.8rem; }
+.cd-sub { font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); }
+.cd-big {
+  font-family: 'Playfair Display', serif; font-size: clamp(30px, 9vw, 54px);
+  font-weight: 300; font-style: italic; color: var(--w80); line-height: 1.1; margin: 0.3rem 0 0.2rem;
+}
+
+/* ── VENUE ─────────────────────────────── */
+.sec-venue { background: #000; padding: 5.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
+.venue-photo {
+  width: 100%; max-width: 440px; margin: 0 auto 2.5rem;
+  border-radius: 14px; overflow: hidden; aspect-ratio: 4/3;
+}
+.venue-photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(0.65) brightness(0.9);
+}
+.venue-name {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(28px, 8vw, 46px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.04em; color: #fff; line-height: 1; margin-bottom: 0.9rem;
+}
+.venue-address { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--w30); line-height: 2; margin-bottom: 1.4rem; }
+.venue-desc {
+  font-size: 13px; color: rgba(255,255,255,0.32);
+  max-width: 360px; margin: 0 auto 2.2rem; line-height: 1.95; letter-spacing: 0.03em;
+}
+.pill {
+  display: inline-block; font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
+  color: #fff; border: 0.5px solid var(--w30); border-radius: 100px;
+  padding: 0.85rem 2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s;
+}
+.pill:hover { border-color: #fff; background: var(--w08); }
+
+/* ── DETAILS ──────────────────────────── */
+.sec-details { background: #070707; border-top: 0.5px solid var(--w08); padding: 5.5rem 2rem; text-align: center; }
+.details-rows { max-width: 420px; margin: 0 auto; }
+.d-row { padding: 2rem 0; border-bottom: 0.5px solid var(--w08); }
+.d-row:last-child { border-bottom: none; }
+.d-label {
+  font-family: 'Big Shoulders Display', sans-serif; font-size: clamp(20px, 6vw, 30px);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; margin-bottom: 0.5rem;
+}
+.d-val { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--w30); line-height: 2; }
+
+/* ── RSVP SECTION ─────────────────────── */
+.sec-rsvp { background: #000; padding: 6rem 2rem 7rem; text-align: center; border-top: 0.5px solid var(--w05); }
+.rsvp-please {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(64px, 20vw, 120px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.03em; line-height: 0.9; color: #fff;
+}
+.rsvp-word {
+  font-family: 'Playfair Display', serif; font-size: clamp(56px, 18vw, 108px);
+  font-weight: 300; font-style: italic; color: var(--gold); line-height: 0.95; margin-bottom: 0.5rem;
+}
+.rsvp-deadline { font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); margin-bottom: 3rem; }
+
+/* ── RSVP FORM ────────────────────────── */
+.rsvp-form { max-width: 400px; margin: 0 auto; text-align: left; }
+
+.rsvp-step { animation: fadeUp 0.35s ease both; }
+.rsvp-step.hidden { display: none; }
+
+.step-q {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(22px, 6vw, 32px); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em; color: #fff;
+  margin-bottom: 1.8rem; text-align: center;
+}
+
+/* Name input */
+.rsvp-input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid var(--w15); color: #fff;
+  font-family: 'Playfair Display', serif; font-size: clamp(22px, 6vw, 30px);
+  font-weight: 300; font-style: italic; padding: 0.8rem 0;
+  outline: none; transition: border-color 0.2s; text-align: center; letter-spacing: 0.04em;
+}
+.rsvp-input::placeholder { color: var(--w15); font-style: italic; }
+.rsvp-input:focus { border-bottom-color: var(--gold); }
+
+.name-result {
+  min-height: 2.5rem; text-align: center; margin: 1.2rem 0 1.5rem;
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; line-height: 1.6;
+}
+.name-found { color: var(--gold); }
+.name-not-found { color: var(--w30); }
+
+/* Attend buttons */
+.attend-btns { display: flex; flex-direction: column; gap: 1rem; }
+.att-btn {
+  font-family: 'Big Shoulders Display', sans-serif; font-size: 13px;
+  font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 1.1rem 2rem; border-radius: 100px; border: none; cursor: pointer;
+  background: var(--gold); color: #000; transition: background 0.2s;
+}
+.att-btn:hover { background: var(--gold-light); }
+.att-btn-ghost {
+  background: transparent; color: var(--w50); border: 0.5px solid var(--w15);
+}
+.att-btn-ghost:hover { background: var(--w08); border-color: var(--w30); color: #fff; }
+
+/* Form fields */
+.form-field { margin-bottom: 2.5rem; }
+.field-label { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 1.2rem; }
+
+/* Stepper */
+.stepper { display: flex; align-items: center; justify-content: center; gap: 1.8rem; }
+.step-btn {
+  width: 42px; height: 42px; border-radius: 50%; border: 0.5px solid var(--w30);
+  background: transparent; color: #fff; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  line-height: 1;
+}
+.step-btn:hover { border-color: var(--gold); color: var(--gold); }
+#party-num {
+  font-family: 'Big Shoulders Display', sans-serif; font-size: 54px;
+  font-weight: 700; color: #fff; min-width: 64px; text-align: center; display: block;
+}
+
+/* Checkboxes */
+.checkbox-group { display: flex; flex-direction: column; gap: 1rem; }
+.check-item {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--w50); cursor: pointer; transition: color 0.2s;
+}
+.check-item:hover { color: #fff; }
+.check-item input[type="checkbox"] {
+  appearance: none; width: 16px; height: 16px; border: 0.5px solid var(--w30);
+  border-radius: 2px; background: transparent; cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+}
+.check-item input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
+
+.other-input {
+  background: transparent; border: none; border-bottom: 0.5px solid var(--w15);
+  color: #fff; font-family: 'Tenor Sans', sans-serif; font-size: 10px;
+  letter-spacing: 0.2em; outline: none; padding: 0 0 2px; width: 130px; transition: border-color 0.2s;
+}
+.other-input:focus { border-bottom-color: var(--gold); }
+.other-input::placeholder { color: var(--w30); }
+
+/* Submit */
+.pill-gold {
+  display: inline-block; font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
+  color: #000; background: var(--gold); border-radius: 100px;
+  padding: 1rem 2.4rem; text-decoration: none; transition: background 0.25s;
+  border: none; cursor: pointer; font-family: 'Tenor Sans', sans-serif;
+}
+.pill-gold:hover:not(:disabled) { background: var(--gold-light); }
+.pill-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.submit-wrap { text-align: center; margin-top: 2.5rem; }
+
+.form-error {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: #d97070; text-align: center; margin-top: 1rem; display: none;
+}
+
+/* Success / Decline states */
+.success-icon { font-size: 42px; color: var(--gold); margin-bottom: 1rem; }
+.success-hed {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(32px, 10vw, 60px); font-weight: 900;
+  text-transform: uppercase; color: #fff; line-height: 0.9; margin-bottom: 1rem;
+}
+.success-sub { font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
+
+/* ── FOOTER ──────────────────────────── */
+footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
+.footer-yr { font-size: 8px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
+.footer-mono { font-family: 'Big Shoulders Display', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+.footer-mono .a { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(184,150,96,0.22); }
+
+/* ── ANIMATIONS ──────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────── -->
+<section class="hero">
+  <canvas id="sparkles"></canvas>
+  <img class="hero-bg"
+    src="https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2021/03/18/1342/SANEN-P0029-Ocean-Aerial.jpg/SANEN-P0029-Ocean-Aerial.16x9.jpg?imwidth=2560"
+    alt="Alila Marea Beach Resort aerial view"
+    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=80';">
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <p class="hero-pre">You are invited to celebrate</p>
+    <span class="hero-name">Alec</span>
+    <span class="hero-amp">&amp;</span>
+    <span class="hero-name">Sylvia</span>
+    <div class="hero-tag">New Years Special</div>
+    <div class="date-row">
+      <div class="date-cell">
+        <span class="dc-label">Thursday</span>
+        <span class="dc-val">31</span>
+        <span class="dc-label">December</span>
+      </div>
+      <div class="date-cell">
+        <span class="dc-label">Begins</span>
+        <span class="dc-val">6:00</span>
+        <span class="dc-label">pm</span>
+      </div>
+      <div class="date-cell">
+        <span class="dc-label">Until</span>
+        <span class="dc-val">12:30</span>
+        <span class="dc-label">am</span>
+      </div>
+    </div>
+    <div class="hero-venue">Alila Marea Beach Resort &nbsp;·&nbsp; Encinitas, CA</div>
+  </div>
+</section>
+
+<!-- ── COUNTDOWN ───────────────────────── -->
+<section class="sec-countdown">
+  <span class="sec-accent">the</span>
+  <div class="sec-title">Countdown</div>
+  <div class="cd-wrap">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><div class="cd-lbl">Days</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><div class="cd-lbl">Hours</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><div class="cd-lbl">Minutes</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><div class="cd-lbl">Seconds</div></div>
+  </div>
+  <div class="cd-tagline">
+    <div class="cd-sub">We can't wait to</div>
+    <div class="cd-big">celebrate</div>
+    <div class="cd-sub">with you</div>
+  </div>
+</section>
+
+<!-- ── VENUE ──────────────────────────── -->
+<section class="sec-venue">
+  <span class="sec-accent">the</span>
+  <div class="sec-title">Venue</div>
+  <div class="venue-photo">
+    <img src="https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2021/03/18/1342/SANEN-P0029-Ocean-Aerial.jpg/SANEN-P0029-Ocean-Aerial.16x9.jpg?imwidth=2560"
+      alt="Alila Marea Beach Resort" onerror="this.onerror=null;">
+  </div>
+  <div class="venue-name">Alila Marea<br>Beach Resort</div>
+  <div class="venue-address">2100 N Coast Highway 101<br>Encinitas, California &nbsp;92024</div>
+  <p class="venue-desc">Perched above the Pacific on a seaside bluff — natural stone, warm wood, and the endless California horizon. The perfect place to watch one year become the next.</p>
+  <a class="pill" href="https://maps.google.com/?q=Alila+Marea+Beach+Resort+Encinitas+CA" target="_blank" rel="noopener">Google Maps</a>
+</section>
+
+<!-- ── DETAILS ─────────────────────────── -->
+<section class="sec-details">
+  <span class="sec-accent">the</span>
+  <div class="sec-title">Details</div>
+  <div class="details-rows">
+    <div class="d-row">
+      <div class="d-label">Dress Code</div>
+      <div class="d-val">Black Tie Optional<br>Cocktail attire welcome</div>
+    </div>
+    <div class="d-row">
+      <div class="d-label">The Evening</div>
+      <div class="d-val">6:00 PM — Cocktail Hour<br>Dinner &amp; Dancing<br>Midnight Toast &amp; Champagne<br>Until 12:30 AM</div>
+    </div>
+    <div class="d-row">
+      <div class="d-label">Location</div>
+      <div class="d-val">2100 N Coast Highway 101<br>Encinitas, California 92024</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RSVP ───────────────────────────── -->
+<section class="sec-rsvp" id="rsvp">
+  <div class="rsvp-please">Please</div>
+  <div class="rsvp-word">rsvp</div>
+  <div class="rsvp-deadline">Before December 1, 2026</div>
+
+  <div class="rsvp-form">
+
+    <!-- Step 1: Name -->
+    <div class="rsvp-step" id="step-1">
+      <div class="step-q">What's your name?</div>
+      <input class="rsvp-input" id="name-input" type="text" placeholder="First &amp; Last" autocomplete="name" spellcheck="false">
+      <div class="name-result" id="name-result"></div>
+      <div style="text-align:center; display:none" id="confirm-wrap">
+        <button class="pill-gold" id="btn-confirm">That's me &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Attending? -->
+    <div class="rsvp-step hidden" id="step-2">
+      <div class="step-q">Will you be joining us?</div>
+      <div class="attend-btns">
+        <button class="att-btn" id="btn-yes">Joyfully accepts</button>
+        <button class="att-btn att-btn-ghost" id="btn-no">Regretfully declines</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Details -->
+    <div class="rsvp-step hidden" id="step-3">
+      <div class="step-q">A few details</div>
+
+      <div class="form-field">
+        <label class="field-label">Guests attending</label>
+        <div class="stepper">
+          <button class="step-btn" id="btn-dec">&minus;</button>
+          <span id="party-num">1</span>
+          <button class="step-btn" id="btn-inc">+</button>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Dietary restrictions</label>
+        <div class="checkbox-group">
+          <label class="check-item"><input type="checkbox" value="None"> No restrictions</label>
+          <label class="check-item"><input type="checkbox" value="Vegetarian"> Vegetarian</label>
+          <label class="check-item"><input type="checkbox" value="Vegan"> Vegan</label>
+          <label class="check-item"><input type="checkbox" value="Gluten-free"> Gluten-free</label>
+          <label class="check-item"><input type="checkbox" value="Nut allergy"> Nut allergy</label>
+          <label class="check-item">
+            <input type="checkbox" value="Other" id="chk-other"> Other:
+            <input type="text" id="other-text" class="other-input" placeholder="please specify">
+          </label>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button class="pill-gold" id="btn-submit">Confirm RSVP</button>
+        <div class="form-error" id="form-error">Something went wrong — please try again.</div>
+      </div>
+    </div>
+
+    <!-- Step 4a: Success -->
+    <div class="rsvp-step hidden" id="step-success" style="text-align:center; padding: 2rem 0;">
+      <div class="success-icon">✦</div>
+      <div class="success-hed">See you<br>December 31st</div>
+      <div class="success-sub" style="margin-top:1rem;">We'll be in touch with any updates</div>
+    </div>
+
+    <!-- Step 4b: Decline -->
+    <div class="rsvp-step hidden" id="step-decline" style="text-align:center; padding: 2rem 0;">
+      <div class="success-icon">♡</div>
+      <div class="success-hed">We'll miss<br>you</div>
+      <div class="success-sub" style="margin-top:1rem;">Thank you for letting us know</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────── -->
+<footer>
+  <div class="footer-yr">2026 &nbsp;→&nbsp; 2027</div>
+  <div class="footer-mono">A <span class="a">&amp;</span> S</div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────
+// GUEST LIST — add your guests here
+// maxParty = max guests they can bring (including themselves)
+// ─────────────────────────────────────────
+const GUESTS = [
+  { name: "Alec Chen",       maxParty: 2 },
+  { name: "Sylvia Reyes",    maxParty: 2 },
+  { name: "John Smith",      maxParty: 4 },
+  { name: "Jane Doe",        maxParty: 2 },
+  // ... add all guests
+];
+
+// ── Name matching ─────────────────────────
+function norm(s) { return s.toLowerCase().trim().replace(/\s+/g, ' '); }
+
+function matchGuest(input) {
+  const n = norm(input);
+  if (n.length < 2) return null;
+  // Exact
+  let m = GUESTS.find(g => norm(g.name) === n);
+  if (m) return m;
+  // All typed words appear in the guest name
+  const words = n.split(' ').filter(w => w.length > 1);
+  m = GUESTS.find(g => words.every(w => norm(g.name).includes(w)));
+  return m || null;
+}
+
+// ── State ─────────────────────────────────
+let currentGuest = null;
+let partySize = 1;
+
+// ── Step helpers ──────────────────────────
+function showStep(id) {
+  document.querySelectorAll('.rsvp-step').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+// ── Step 1: Name ──────────────────────────
+const nameInput   = document.getElementById('name-input');
+const nameResult  = document.getElementById('name-result');
+const confirmWrap = document.getElementById('confirm-wrap');
+
+nameInput.addEventListener('input', () => {
+  const match = matchGuest(nameInput.value);
+  if (match) {
+    nameResult.innerHTML = `<span class="name-found">We found you — ${match.name}</span>`;
+    currentGuest = match;
+    partySize = 1;
+    document.getElementById('party-num').textContent = 1;
+    confirmWrap.style.display = 'block';
+  } else if (norm(nameInput.value).length > 2) {
+    nameResult.innerHTML = `<span class="name-not-found">Name not found on the list —<br>double-check spelling</span>`;
+    currentGuest = null;
+    confirmWrap.style.display = 'none';
+  } else {
+    nameResult.innerHTML = '';
+    confirmWrap.style.display = 'none';
+  }
+});
+
+document.getElementById('btn-confirm').addEventListener('click', () => {
+  if (!currentGuest) return;
+  showStep('step-2');
+});
+
+// ── Step 2: Attending ─────────────────────
+document.getElementById('btn-yes').addEventListener('click', () => {
+  showStep('step-3');
+});
+
+document.getElementById('btn-no').addEventListener('click', () => {
+  submitRsvp(false);
+});
+
+// ── Step 3: Party size ────────────────────
+document.getElementById('btn-inc').addEventListener('click', () => {
+  if (partySize < (currentGuest?.maxParty || 8)) {
+    partySize++;
+    document.getElementById('party-num').textContent = partySize;
+  }
+});
+
+document.getElementById('btn-dec').addEventListener('click', () => {
+  if (partySize > 1) {
+    partySize--;
+    document.getElementById('party-num').textContent = partySize;
+  }
+});
+
+// ── Submit ────────────────────────────────
+document.getElementById('btn-submit').addEventListener('click', () => {
+  submitRsvp(true);
+});
+
+async function submitRsvp(attending) {
+  const errEl  = document.getElementById('form-error');
+  const btnEl  = document.getElementById('btn-submit');
+  errEl.style.display = 'none';
+
+  if (attending && btnEl) {
+    btnEl.textContent = 'Sending…';
+    btnEl.disabled = true;
+  }
+
+  // Collect dietary
+  const dietary = [];
+  document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(cb => {
+    if (cb.value === 'Other') {
+      const t = document.getElementById('other-text').value.trim();
+      dietary.push(t ? 'Other: ' + t : 'Other');
+    } else {
+      dietary.push(cb.value);
+    }
+  });
+
+  try {
+    const res = await fetch('/.netlify/functions/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:      currentGuest.name,
+        attending: attending,
+        partySize: attending ? partySize : 0,
+        dietary:   dietary.join(', ') || 'None',
+      }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    showStep(attending ? 'step-success' : 'step-decline');
+  } catch {
+    if (btnEl) { btnEl.textContent = 'Confirm RSVP'; btnEl.disabled = false; }
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Countdown ────────────────────────────
+const TARGET = new Date('2026-12-31T18:00:00-08:00');
+function pad(n, w) { return String(n).padStart(w, '0'); }
+function tick() {
+  const diff = TARGET - Date.now();
+  if (diff <= 0) return;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent  = pad(d, 3);
+  document.getElementById('cd-hours').textContent = pad(h, 2);
+  document.getElementById('cd-mins').textContent  = pad(m, 2);
+  document.getElementById('cd-secs').textContent  = pad(s, 2);
+}
+tick(); setInterval(tick, 1000);
+
+// ── Sparkles ─────────────────────────────
+const C = document.getElementById('sparkles');
+const X = C.getContext('2d');
+function resize() { C.width = C.offsetWidth; C.height = C.offsetHeight; }
+resize(); window.addEventListener('resize', resize);
+const pts = Array.from({length: 90}, () => ({
+  x: Math.random(), y: Math.random(),
+  r: Math.random() * 1.3 + 0.2,
+  spd: Math.random() * 0.0001 + 0.00003,
+  op: Math.random() * 0.45 + 0.08,
+  ph: Math.random() * Math.PI * 2,
+  ps: Math.random() * 0.01 + 0.003,
+  gold: Math.random() > 0.5
+}));
+function draw() {
+  X.clearRect(0, 0, C.width, C.height);
+  pts.forEach(p => {
+    p.y -= p.spd; if (p.y < -0.01) p.y = 1.01;
+    p.ph += p.ps;
+    const a = p.op * (0.4 + 0.6 * Math.sin(p.ph));
+    X.beginPath();
+    X.arc(p.x * C.width, p.y * C.height, p.r, 0, Math.PI*2);
+    X.fillStyle = p.gold ? `rgba(212,178,128,${a})` : `rgba(195,195,210,${a})`;
+    X.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
