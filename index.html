@@ -264,6 +264,15 @@ body {
 .other-input:focus { border-bottom-color: var(--gold); }
 .other-input::placeholder { color: var(--w30); }
 
+.song-input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 0.5px solid var(--w15); color: #fff;
+  font-family: 'Tenor Sans', sans-serif; font-size: 12px;
+  letter-spacing: 0.1em; outline: none; padding: 0 0 0.6rem; transition: border-color 0.2s;
+}
+.song-input:focus { border-bottom-color: var(--gold); }
+.song-input::placeholder { color: var(--w30); }
+
 /* Submit */
 .pill-gold {
   display: inline-block; font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
@@ -453,6 +462,11 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
         </div>
       </div>
 
+      <div class="form-field">
+        <label class="field-label">Song request</label>
+        <input type="text" id="song-request" class="song-input" placeholder="What'll get you on the dance floor?">
+      </div>
+
       <div class="submit-wrap">
         <button class="pill-gold" id="btn-submit">Confirm RSVP</button>
         <div class="form-error" id="form-error">Something went wrong — please try again.</div>
@@ -598,15 +612,18 @@ async function submitRsvp(attending) {
     }
   });
 
+  const songRequest = document.getElementById('song-request').value.trim();
+
   try {
     const res = await fetch('/.netlify/functions/rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name:      currentGuest.name,
-        attending: attending,
-        partySize: attending ? partySize : 0,
-        dietary:   dietary.join(', ') || 'None',
+        name:        currentGuest.name,
+        attending:   attending,
+        partySize:   attending ? partySize : 0,
+        dietary:     dietary.join(', ') || 'None',
+        songRequest: attending ? songRequest : '',
       }),
     });
     if (!res.ok) throw new Error('Server error');

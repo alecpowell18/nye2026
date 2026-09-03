@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { name, attending, partySize, dietary } = data;
+  const { name, attending, partySize, dietary, songRequest } = data;
   if (!name) return { statusCode: 400, body: 'Missing name' };
 
   try {
@@ -26,7 +26,7 @@ exports.handler = async (event) => {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SHEET_ID,
-      range: 'RSVPs!A:E',
+      range: 'RSVPs!A:F',
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [[
@@ -35,6 +35,7 @@ exports.handler = async (event) => {
           attending ? 'YES' : 'NO',
           attending ? String(partySize) : '0',
           dietary || 'None',
+          songRequest || '',
         ]],
       },
     });
