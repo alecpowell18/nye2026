@@ -56,8 +56,7 @@ exports.handler = async (event) => {
     console.error('Sheets error:', err);
     return {
       statusCode: 500,
-      // TEMP: surfacing real error for debugging — revert to a generic message once resolved
-      body: JSON.stringify({ error: 'Failed to save RSVP', detail: err.message, response: err.response?.data }),
+      body: JSON.stringify({ error: 'Failed to save RSVP' }),
     };
   }
 };
