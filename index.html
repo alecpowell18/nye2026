@@ -60,8 +60,9 @@ body {
 .hero-inner { position: relative; z-index: 2; }
 
 .hero-pre {
-  font-size: 8px; letter-spacing: 0.6em; text-transform: uppercase;
-  color: var(--w50); margin-bottom: 2.2rem;
+  font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--w80); margin-bottom: 2.2rem;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 .hero-name {
   font-family: 'Big Shoulders Display', sans-serif;
@@ -92,7 +93,11 @@ body {
   font-family: 'Big Shoulders Display', sans-serif;
   font-size: clamp(28px, 8vw, 46px); font-weight: 700; color: #fff; line-height: 1;
 }
-.hero-venue { font-size: 8px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); margin-top: 0.4rem; }
+.hero-venue {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--w80); margin-top: 0.4rem;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
 
 /* ── COUNTDOWN ─────────────────────────── */
 .sec-countdown { background: #080808; padding: 5.5rem 2rem; text-align: center; }
@@ -497,36 +502,16 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 </footer>
 
 <script>
-// ─────────────────────────────────────────
-// GUEST LIST — add your guests here
-// maxParty = max guests they can bring (including themselves)
-// ─────────────────────────────────────────
-const GUESTS = [
-  { name: "Alec Chen",       maxParty: 2 },
-  { name: "Sylvia Reyes",    maxParty: 2 },
-  { name: "John Smith",      maxParty: 4 },
-  { name: "Jane Doe",        maxParty: 2 },
-  // ... add all guests
-];
-
-// ── Name matching ─────────────────────────
-function norm(s) { return s.toLowerCase().trim().replace(/\s+/g, ' '); }
-
-function matchGuest(input) {
-  const n = norm(input);
-  if (n.length < 2) return null;
-  // Exact
-  let m = GUESTS.find(g => norm(g.name) === n);
-  if (m) return m;
-  // All typed words appear in the guest name
-  const words = n.split(' ').filter(w => w.length > 1);
-  m = GUESTS.find(g => words.every(w => norm(g.name).includes(w)));
-  return m || null;
-}
-
 // ── State ─────────────────────────────────
-let currentGuest = null;
+// The guest list lives server-side (Google Sheet "Guests" tab) and is
+// checked by the guest-lookup function — nothing about who's invited
+// ships to the browser.
+let currentGuest = null;   // { name, maxParty }
+let existingRsvp = null;   // { attending, partySize, dietary, songRequest } | null
 let partySize = 1;
+let lookupSeq = 0;         // guards against out-of-order responses
+
+function norm(s) { return String(s || '').toLowerCase().trim().replace(/\s+/g, ' '); }
 
 // ── Step helpers ──────────────────────────
 function showStep(id) {
@@ -539,26 +524,95 @@ const nameInput   = document.getElementById('name-input');
 const nameResult  = document.getElementById('name-result');
 const confirmWrap = document.getElementById('confirm-wrap');
 
+let lookupTimer = null;
+
 nameInput.addEventListener('input', () => {
-  const match = matchGuest(nameInput.value);
-  if (match) {
-    nameResult.innerHTML = `<span class="name-found">We found you — ${match.name}</span>`;
-    currentGuest = match;
-    partySize = 1;
-    document.getElementById('party-num').textContent = 1;
-    confirmWrap.style.display = 'block';
-  } else if (norm(nameInput.value).length > 2) {
-    nameResult.innerHTML = `<span class="name-not-found">Name not found on the list —<br>double-check spelling</span>`;
-    currentGuest = null;
-    confirmWrap.style.display = 'none';
-  } else {
+  clearTimeout(lookupTimer);
+  const value = nameInput.value;
+
+  if (norm(value).length < 3) {
     nameResult.innerHTML = '';
     confirmWrap.style.display = 'none';
+    currentGuest = null;
+    existingRsvp = null;
+    return;
   }
+
+  nameResult.innerHTML = `<span class="name-not-found">Checking…</span>`;
+  confirmWrap.style.display = 'none';
+
+  lookupTimer = setTimeout(() => lookupGuest(value), 400);
 });
+
+async function lookupGuest(value) {
+  const seq = ++lookupSeq;
+  let data;
+  try {
+    const res = await fetch('/.netlify/functions/guest-lookup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: value }),
+    });
+    data = await res.json();
+  } catch {
+    data = null;
+  }
+
+  if (seq !== lookupSeq) return; // a newer keystroke already superseded this
+
+  if (data && data.found) {
+    currentGuest = { name: data.name, maxParty: data.maxParty };
+    existingRsvp = data.existingRsvp || null;
+
+    if (existingRsvp) {
+      const status = existingRsvp.attending
+        ? `Joyfully accepted, party of ${existingRsvp.partySize}`
+        : 'Regretfully declined';
+      nameResult.innerHTML = `<span class="name-found">Welcome back, ${data.name}<br>You previously RSVP'd — ${status}. Update below if anything's changed.</span>`;
+    } else {
+      nameResult.innerHTML = `<span class="name-found">We found you — ${data.name}</span>`;
+    }
+    confirmWrap.style.display = 'block';
+  } else {
+    currentGuest = null;
+    existingRsvp = null;
+    nameResult.innerHTML = `<span class="name-not-found">Name not found on the list —<br>double-check spelling</span>`;
+    confirmWrap.style.display = 'none';
+  }
+}
+
+function applyExistingRsvp() {
+  if (!existingRsvp) {
+    partySize = 1;
+    document.getElementById('party-num').textContent = 1;
+    return;
+  }
+
+  partySize = Math.min(Math.max(existingRsvp.partySize || 1, 1), currentGuest.maxParty || 8);
+  document.getElementById('party-num').textContent = partySize;
+
+  const dietaryValues = (existingRsvp.dietary || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+  dietaryValues.forEach(val => {
+    if (val.startsWith('Other')) {
+      document.getElementById('chk-other').checked = true;
+      document.getElementById('other-text').value = val.replace(/^Other:\s*/, '');
+    } else {
+      const cb = document.querySelector(`.checkbox-group input[value="${CSS.escape(val)}"]`);
+      if (cb) cb.checked = true;
+    }
+  });
+
+  document.getElementById('song-request').value = existingRsvp.songRequest || '';
+}
 
 document.getElementById('btn-confirm').addEventListener('click', () => {
   if (!currentGuest) return;
+  applyExistingRsvp();
   showStep('step-2');
 });
 

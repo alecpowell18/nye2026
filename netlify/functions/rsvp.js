@@ -1,4 +1,4 @@
-const { google } = require('googleapis');
+const { checkEnv, getSheetsClient, findGuest, findExistingRsvp } = require('./_sheets');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -15,37 +15,51 @@ exports.handler = async (event) => {
   const { name, attending, partySize, dietary, songRequest } = data;
   if (!name) return { statusCode: 400, body: 'Missing name' };
 
-  if (!process.env.GOOGLE_SERVICE_ACCOUNT) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'GOOGLE_SERVICE_ACCOUNT env var is not set' }) };
-  }
-  if (!process.env.SHEET_ID) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'SHEET_ID env var is not set' }) };
+  const envErr = checkEnv();
+  if (envErr) {
+    return { statusCode: 500, body: JSON.stringify({ error: envErr }) };
   }
 
   try {
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
+    const sheets = await getSheetsClient();
 
-    const sheets = google.sheets({ version: 'v4', auth });
+    // Re-validate against the guest list server-side rather than trusting
+    // whatever name the client sends — the confirm step is just a UX nicety.
+    const guest = await findGuest(sheets, name);
+    if (!guest) {
+      return { statusCode: 403, body: JSON.stringify({ error: 'Name not recognized' }) };
+    }
 
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.SHEET_ID,
-      range: 'RSVPs!A:F',
-      valueInputOption: 'USER_ENTERED',
-      resource: {
-        values: [[
-          new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
-          name,
-          attending ? 'YES' : 'NO',
-          attending ? String(partySize) : '0',
-          dietary || 'None',
-          songRequest || '',
-        ]],
-      },
-    });
+    const cappedParty = attending
+      ? Math.min(Math.max(parseInt(partySize, 10) || 1, 1), guest.maxParty)
+      : 0;
+
+    const row = [
+      new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
+      guest.name,
+      attending ? 'YES' : 'NO',
+      String(cappedParty),
+      dietary || 'None',
+      attending ? (songRequest || '') : '',
+    ];
+
+    const existing = await findExistingRsvp(sheets, guest.name);
+
+    if (existing) {
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: process.env.SHEET_ID,
+        range: `RSVPs!A${existing.rowNumber}:F${existing.rowNumber}`,
+        valueInputOption: 'USER_ENTERED',
+        resource: { values: [row] },
+      });
+    } else {
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.SHEET_ID,
+        range: 'RSVPs!A:F',
+        valueInputOption: 'USER_ENTERED',
+        resource: { values: [row] },
+      });
+    }
 
     return {
       statusCode: 200,
