@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alec & Sylvia's New Years Special</title>
+<title>Sylvia & Alec's New Years Special</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;700;900&family=Playfair+Display:ital,wght@0,300;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@ body {
 .hero-bg {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; object-position: center 35%;
+  object-fit: cover; object-position: center;
   opacity: 0.32; filter: saturate(0.5) brightness(0.7);
 }
 .hero-overlay {
@@ -65,9 +65,9 @@ body {
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 .hero-name {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(80px, 24vw, 140px); font-weight: 900;
-  text-transform: uppercase; letter-spacing: 0.02em; color: #fff; display: block;
+  font-family: 'Didot', 'Bodoni MT', 'Playfair Display', serif;
+  font-size: clamp(80px, 24vw, 140px); font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.04em; color: #fff; display: block;
   line-height: 0.85;
 }
 .hero-amp {
@@ -375,7 +375,7 @@ body {
 /* ── FOOTER ──────────────────────────── */
 footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
 .footer-yr { font-size: 8px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
-.footer-mono { font-family: 'Big Shoulders Display', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+.footer-mono { font-family: 'Didot', 'Bodoni MT', 'Playfair Display', serif; font-size: 15px; font-weight: 400; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
 .footer-mono .a { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(184,150,96,0.22); }
 
 /* ── ANIMATIONS ──────────────────────── */
@@ -395,15 +395,14 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 <section class="hero">
   <canvas id="sparkles"></canvas>
   <img class="hero-bg"
-    src="https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2021/03/18/1342/SANEN-P0029-Ocean-Aerial.jpg/SANEN-P0029-Ocean-Aerial.16x9.jpg?imwidth=2560"
-    alt="Alila Marea Beach Resort aerial view"
-    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=80';">
+    src="images/hero-bouquet.jpg"
+    alt="Bride and groom detail with bouquet">
   <div class="hero-overlay"></div>
   <div class="hero-inner">
     <p class="hero-pre">You are invited to celebrate</p>
-    <span class="hero-name">Alec</span>
-    <span class="hero-amp">&amp;</span>
     <span class="hero-name">Sylvia</span>
+    <span class="hero-amp">&amp;</span>
+    <span class="hero-name">Alec</span>
     <div class="hero-tag">New Years Special</div>
     <div class="date-row">
       <div class="date-cell">
@@ -588,7 +587,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 <!-- ── FOOTER ─────────────────────────── -->
 <footer>
   <div class="footer-yr">2026 &nbsp;→&nbsp; 2027</div>
-  <div class="footer-mono">A <span class="a">&amp;</span> S</div>
+  <div class="footer-mono">S <span class="a">&amp;</span> A</div>
 </footer>
 
 <script>
