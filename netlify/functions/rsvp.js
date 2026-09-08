@@ -1,4 +1,4 @@
-const { checkEnv, getSheetsClient, findGuest, findExistingRsvp } = require('./_sheets');
+const { norm, checkEnv, getSheetsClient, findParty, getPartyRsvps, MAX_ADDED_GUESTS } = require('./_sheets');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -12,8 +12,14 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { name, attending, partySize, dietary, songRequest } = data;
-  if (!name) return { statusCode: 400, body: 'Missing name' };
+  const partyId = String(data.partyId || '').trim();
+  const responses = Array.isArray(data.responses) ? data.responses : [];
+  const dietary = data.dietary || 'None';
+  const songRequest = data.songRequest || '';
+
+  if (!partyId || responses.length === 0) {
+    return { statusCode: 400, body: 'Missing partyId or responses' };
+  }
 
   const envErr = checkEnv();
   if (envErr) {
@@ -23,41 +29,60 @@ exports.handler = async (event) => {
   try {
     const sheets = await getSheetsClient();
 
-    // Re-validate against the guest list server-side rather than trusting
-    // whatever name the client sends — the confirm step is just a UX nicety.
-    const guest = await findGuest(sheets, name);
-    if (!guest) {
-      return { statusCode: 403, body: JSON.stringify({ error: 'Name not recognized' }) };
+    // Re-validate against the Guests tab rather than trusting whatever
+    // names/partyId the client sends.
+    const party = await findParty(sheets, partyId);
+    if (party.length === 0) {
+      return { statusCode: 403, body: JSON.stringify({ error: 'Party not recognized' }) };
     }
+    const partyNames = new Set(party.map((p) => norm(p.name)));
+    // Only solo invites may add guests who aren't on the Guests tab
+    // (e.g. a plus-one or a baby), and only up to the cap.
+    const canAddGuests = party.length === 1;
 
-    const cappedParty = attending
-      ? Math.min(Math.max(parseInt(partySize, 10) || 1, 1), guest.maxParty)
-      : 0;
+    const { byName } = await getPartyRsvps(sheets, partyId, partyNames);
+    const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
-    const row = [
-      new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
-      guest.name,
-      attending ? 'YES' : 'NO',
-      String(cappedParty),
-      dietary || 'None',
-      attending ? (songRequest || '') : '',
-    ];
+    const updates = [];
+    const appends = [];
+    let addedCount = 0;
 
-    const existing = await findExistingRsvp(sheets, guest.name);
+    responses.forEach((r) => {
+      const name = String(r.name || '').trim();
+      if (!name) return;
 
-    if (existing) {
-      await sheets.spreadsheets.values.update({
-        spreadsheetId: process.env.SHEET_ID,
-        range: `RSVPs!A${existing.rowNumber}:F${existing.rowNumber}`,
-        valueInputOption: 'USER_ENTERED',
-        resource: { values: [row] },
-      });
-    } else {
+      const isOfficial = partyNames.has(norm(name));
+      if (!isOfficial) {
+        if (!canAddGuests || addedCount >= MAX_ADDED_GUESTS) return;
+        addedCount++;
+      }
+
+      const attending = isOfficial ? !!r.attending : true; // added guests always accompany the host
+      const notes = !isOfficial && r.baby ? 'Baby' : '';
+      const row = [timestamp, partyId, name, attending ? 'YES' : 'NO', dietary, songRequest, notes];
+      const existing = byName[norm(name)];
+
+      if (existing) {
+        updates.push(
+          sheets.spreadsheets.values.update({
+            spreadsheetId: process.env.SHEET_ID,
+            range: `RSVPs!A${existing.rowNumber}:G${existing.rowNumber}`,
+            valueInputOption: 'USER_ENTERED',
+            resource: { values: [row] },
+          })
+        );
+      } else {
+        appends.push(row);
+      }
+    });
+
+    if (updates.length) await Promise.all(updates);
+    if (appends.length) {
       await sheets.spreadsheets.values.append({
         spreadsheetId: process.env.SHEET_ID,
-        range: 'RSVPs!A:F',
+        range: 'RSVPs!A:G',
         valueInputOption: 'USER_ENTERED',
-        resource: { values: [row] },
+        resource: { values: appends },
       });
     }
 

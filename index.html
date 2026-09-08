@@ -155,8 +155,9 @@ body {
 }
 .pill {
   display: inline-block; font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
-  color: #fff; border: 0.5px solid var(--w30); border-radius: 100px;
+  color: #fff; background: transparent; border: 0.5px solid var(--w30); border-radius: 100px;
   padding: 0.85rem 2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s;
+  font-family: 'Tenor Sans', sans-serif; cursor: pointer;
 }
 .pill:hover { border-color: #fff; background: var(--w08); }
 
@@ -209,43 +210,81 @@ body {
 .rsvp-input:focus { border-bottom-color: var(--gold); }
 
 .name-result {
-  min-height: 2.5rem; text-align: center; margin: 1.2rem 0 1.5rem;
+  min-height: 1.5rem; text-align: center; margin: 1.2rem 0 1.5rem;
   font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; line-height: 1.6;
 }
 .name-found { color: var(--gold); }
 .name-not-found { color: var(--w30); }
 
-/* Attend buttons */
-.attend-btns { display: flex; flex-direction: column; gap: 1rem; }
-.att-btn {
-  font-family: 'Big Shoulders Display', sans-serif; font-size: 13px;
-  font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 1.1rem 2rem; border-radius: 100px; border: none; cursor: pointer;
-  background: var(--gold); color: #000; transition: background 0.2s;
+/* Name search row */
+.name-row { display: flex; gap: 1.2rem; margin-bottom: 0.5rem; }
+.name-field { flex: 1; }
+.name-field .rsvp-input { text-align: left; font-size: clamp(18px, 5vw, 24px); }
+
+/* Party card (search result) */
+.party-card {
+  border: 0.5px solid var(--w15); border-radius: 10px;
+  padding: 2rem 1.5rem; text-align: center; margin-bottom: 1.5rem;
 }
-.att-btn:hover { background: var(--gold-light); }
-.att-btn-ghost {
-  background: transparent; color: var(--w50); border: 0.5px solid var(--w15);
+.party-names {
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 5vw, 24px);
+  color: #fff; line-height: 1.7; margin-bottom: 1.5rem;
 }
-.att-btn-ghost:hover { background: var(--w08); border-color: var(--w30); color: #fff; }
+
+/* Party member RSVP rows */
+.member-card {
+  border: 0.5px solid var(--w08); border-radius: 10px;
+  padding: 1.4rem 1.6rem; margin-bottom: 1.2rem;
+}
+.member-name {
+  font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 5vw, 22px);
+  color: #fff; margin-bottom: 1rem;
+}
+.member-q { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--w30); margin-bottom: 0.9rem; }
+.radio-group { display: flex; gap: 1.8rem; }
+.radio-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--w50); cursor: pointer; transition: color 0.2s;
+}
+.radio-item:hover { color: #fff; }
+.radio-item input[type="radio"] {
+  appearance: none; width: 15px; height: 15px; border: 0.5px solid var(--w30);
+  border-radius: 50%; background: transparent; cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+}
+.radio-item input[type="radio"]:checked { background: var(--gold); border-color: var(--gold); }
 
 /* Form fields */
 .form-field { margin-bottom: 2.5rem; }
 .field-label { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 1.2rem; }
 
-/* Stepper */
-.stepper { display: flex; align-items: center; justify-content: center; gap: 1.8rem; }
-.step-btn {
-  width: 42px; height: 42px; border-radius: 50%; border: 0.5px solid var(--w30);
-  background: transparent; color: #fff; font-size: 22px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-  line-height: 1;
+/* Added guests (solo invites bringing someone not on the list) */
+.added-guest-row {
+  display: flex; align-items: flex-end; gap: 0.8rem; margin-bottom: 1rem;
 }
-.step-btn:hover { border-color: var(--gold); color: var(--gold); }
-#party-num {
-  font-family: 'Big Shoulders Display', sans-serif; font-size: 54px;
-  font-weight: 700; color: #fff; min-width: 64px; text-align: center; display: block;
+.added-guest-row .name-field .rsvp-input { font-size: 15px; padding: 0.5rem 0; }
+.added-guest-baby {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--w50);
+  cursor: pointer; white-space: nowrap; padding-bottom: 0.6rem;
 }
+.added-guest-baby input[type="checkbox"] {
+  appearance: none; width: 14px; height: 14px; border: 0.5px solid var(--w30);
+  border-radius: 2px; background: transparent; cursor: pointer; flex-shrink: 0;
+}
+.added-guest-baby input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
+.remove-guest-btn {
+  width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--w15);
+  background: transparent; color: var(--w50); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
+  flex-shrink: 0; margin-bottom: 0.5rem; transition: all 0.2s;
+}
+.remove-guest-btn:hover { border-color: #d97070; color: #d97070; }
+.add-guest-btn {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+  background: none; border: none; cursor: pointer; padding: 0.5rem 0;
+}
+.add-guest-btn:hover { color: var(--gold-light); }
 
 /* Checkboxes */
 .checkbox-group { display: flex; flex-direction: column; gap: 1rem; }
@@ -420,36 +459,46 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 
   <div class="rsvp-form">
 
-    <!-- Step 1: Name -->
-    <div class="rsvp-step" id="step-1">
-      <div class="step-q">What's your name?</div>
-      <input class="rsvp-input" id="name-input" type="text" placeholder="First &amp; Last" autocomplete="name" spellcheck="false">
-      <div class="name-result" id="name-result"></div>
-      <div style="text-align:center; display:none" id="confirm-wrap">
-        <button class="pill-gold" id="btn-confirm">That's me &rarr;</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Attending? -->
-    <div class="rsvp-step hidden" id="step-2">
-      <div class="step-q">Will you be joining us?</div>
-      <div class="attend-btns">
-        <button class="att-btn" id="btn-yes">Joyfully accepts</button>
-        <button class="att-btn att-btn-ghost" id="btn-no">Regretfully declines</button>
-      </div>
-    </div>
-
-    <!-- Step 3: Details -->
-    <div class="rsvp-step hidden" id="step-3">
-      <div class="step-q">A few details</div>
-
-      <div class="form-field">
-        <label class="field-label">Guests attending</label>
-        <div class="stepper">
-          <button class="step-btn" id="btn-dec">&minus;</button>
-          <span id="party-num">1</span>
-          <button class="step-btn" id="btn-inc">+</button>
+    <!-- Step 1: Find your RSVP -->
+    <div class="rsvp-step" id="step-search">
+      <div class="step-q">Find your RSVP</div>
+      <div class="name-row">
+        <div class="name-field">
+          <label class="field-label">First Name</label>
+          <input class="rsvp-input" id="first-name-input" type="text" autocomplete="given-name" spellcheck="false">
         </div>
+        <div class="name-field">
+          <label class="field-label">Last Name</label>
+          <input class="rsvp-input" id="last-name-input" type="text" autocomplete="family-name" spellcheck="false">
+        </div>
+      </div>
+      <div class="name-result" id="search-result"></div>
+      <div class="submit-wrap">
+        <button class="pill-gold" id="btn-find">Find My RSVP</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Party found -->
+    <div class="rsvp-step hidden" id="step-party">
+      <div class="party-card">
+        <div class="party-names" id="party-names"></div>
+        <button class="pill-gold" id="btn-rsvp-here">RSVP here</button>
+      </div>
+      <div class="submit-wrap">
+        <button class="pill" id="btn-back-to-search" type="button">Back to Search</button>
+      </div>
+    </div>
+
+    <!-- Step 3: RSVP form -->
+    <div class="rsvp-step hidden" id="step-form">
+      <div class="step-q" id="form-welcome">Please fill out the RSVP</div>
+
+      <div id="party-members"></div>
+
+      <div class="form-field hidden" id="added-guests-field">
+        <label class="field-label">Bringing anyone else?</label>
+        <div id="added-guests-list"></div>
+        <button class="add-guest-btn" id="btn-add-guest" type="button">+ Add Guest</button>
       </div>
 
       <div class="form-field">
@@ -473,23 +522,22 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
       </div>
 
       <div class="submit-wrap">
-        <button class="pill-gold" id="btn-submit">Confirm RSVP</button>
+        <button class="pill-gold" id="btn-submit">Submit RSVP</button>
         <div class="form-error" id="form-error">Something went wrong — please try again.</div>
+      </div>
+      <div class="submit-wrap">
+        <button class="pill" id="btn-search-again" type="button">Search Again</button>
       </div>
     </div>
 
-    <!-- Step 4a: Success -->
+    <!-- Step 4: Success -->
     <div class="rsvp-step hidden" id="step-success" style="text-align:center; padding: 2rem 0;">
       <div class="success-icon">✦</div>
-      <div class="success-hed">See you<br>December 31st</div>
-      <div class="success-sub" style="margin-top:1rem;">We'll be in touch with any updates</div>
-    </div>
-
-    <!-- Step 4b: Decline -->
-    <div class="rsvp-step hidden" id="step-decline" style="text-align:center; padding: 2rem 0;">
-      <div class="success-icon">♡</div>
-      <div class="success-hed">We'll miss<br>you</div>
-      <div class="success-sub" style="margin-top:1rem;">Thank you for letting us know</div>
+      <div class="success-hed">Thank you!</div>
+      <div class="success-sub" style="margin-top:1rem;">Your RSVP has been received. We can't wait to celebrate with you!</div>
+      <div class="submit-wrap">
+        <button class="pill" id="btn-update-response" type="button">Update Response</button>
+      </div>
     </div>
 
   </div>
@@ -506,12 +554,21 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 // The guest list lives server-side (Google Sheet "Guests" tab) and is
 // checked by the guest-lookup function — nothing about who's invited
 // ships to the browser.
-let currentGuest = null;   // { name, maxParty }
-let existingRsvp = null;   // { attending, partySize, dietary, songRequest } | null
-let partySize = 1;
-let lookupSeq = 0;         // guards against out-of-order responses
+let currentParty = null; // { partyId, members, dietary, songRequest, canAddGuests, addedGuests }
+const MAX_ADDED_GUESTS = 4; // mirrors the server-side cap in netlify/functions/_sheets.js
 
 function norm(s) { return String(s || '').toLowerCase().trim().replace(/\s+/g, ' '); }
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function splitName(full) {
+  const parts = String(full || '').trim().split(' ');
+  const lastName = parts.pop() || '';
+  const firstName = parts.join(' ');
+  return { firstName, lastName };
+}
 
 // ── Step helpers ──────────────────────────
 function showStep(id) {
@@ -519,84 +576,102 @@ function showStep(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
-// ── Step 1: Name ──────────────────────────
-const nameInput   = document.getElementById('name-input');
-const nameResult  = document.getElementById('name-result');
-const confirmWrap = document.getElementById('confirm-wrap');
+// ── Step 1: Find your RSVP ────────────────
+const firstNameInput = document.getElementById('first-name-input');
+const lastNameInput  = document.getElementById('last-name-input');
+const searchResult   = document.getElementById('search-result');
+const btnFind        = document.getElementById('btn-find');
 
-let lookupTimer = null;
+btnFind.addEventListener('click', () => findParty());
+[firstNameInput, lastNameInput].forEach(el => {
+  el.addEventListener('keydown', e => { if (e.key === 'Enter') findParty(); });
+});
 
-nameInput.addEventListener('input', () => {
-  clearTimeout(lookupTimer);
-  const value = nameInput.value;
+async function findParty() {
+  const firstName = firstNameInput.value.trim();
+  const lastName  = lastNameInput.value.trim();
 
-  if (norm(value).length < 3) {
-    nameResult.innerHTML = '';
-    confirmWrap.style.display = 'none';
-    currentGuest = null;
-    existingRsvp = null;
+  if (!firstName || !lastName) {
+    searchResult.innerHTML = `<span class="name-not-found">Please enter both first and last name</span>`;
     return;
   }
 
-  nameResult.innerHTML = `<span class="name-not-found">Checking…</span>`;
-  confirmWrap.style.display = 'none';
+  searchResult.innerHTML = `<span class="name-not-found">Checking…</span>`;
+  btnFind.disabled = true;
 
-  lookupTimer = setTimeout(() => lookupGuest(value), 400);
-});
-
-async function lookupGuest(value) {
-  const seq = ++lookupSeq;
   let data;
   try {
     const res = await fetch('/.netlify/functions/guest-lookup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: value }),
+      body: JSON.stringify({ firstName, lastName }),
     });
     data = await res.json();
   } catch {
     data = null;
   }
 
-  if (seq !== lookupSeq) return; // a newer keystroke already superseded this
+  btnFind.disabled = false;
 
   if (data && data.found) {
-    currentGuest = { name: data.name, maxParty: data.maxParty };
-    existingRsvp = data.existingRsvp || null;
-
-    if (existingRsvp) {
-      const status = existingRsvp.attending
-        ? `Joyfully accepted, party of ${existingRsvp.partySize}`
-        : 'Regretfully declined';
-      nameResult.innerHTML = `<span class="name-found">Welcome back, ${data.name}<br>You previously RSVP'd — ${status}. Update below if anything's changed.</span>`;
-    } else {
-      nameResult.innerHTML = `<span class="name-found">We found you — ${data.name}</span>`;
-    }
-    confirmWrap.style.display = 'block';
+    currentParty = {
+      partyId: data.partyId,
+      members: data.members,
+      dietary: data.dietary || '',
+      songRequest: data.songRequest || '',
+      canAddGuests: !!data.canAddGuests,
+      addedGuests: (data.addedGuests || []).map(g => ({ ...splitName(g.name), baby: g.baby })),
+    };
+    searchResult.innerHTML = '';
+    document.getElementById('party-names').innerHTML =
+      currentParty.members.map(m => m.name).join('<br>');
+    showStep('step-party');
   } else {
-    currentGuest = null;
-    existingRsvp = null;
-    nameResult.innerHTML = `<span class="name-not-found">Name not found on the list —<br>double-check spelling</span>`;
-    confirmWrap.style.display = 'none';
+    currentParty = null;
+    searchResult.innerHTML = `<span class="name-not-found">We couldn't find that name —<br>double-check spelling</span>`;
   }
 }
 
-function applyExistingRsvp() {
-  if (!existingRsvp) {
-    partySize = 1;
-    document.getElementById('party-num').textContent = 1;
-    return;
+document.getElementById('btn-back-to-search').addEventListener('click', () => {
+  showStep('step-search');
+});
+
+// ── Step 2: Party found → open form ───────
+document.getElementById('btn-rsvp-here').addEventListener('click', () => {
+  if (!currentParty) return;
+  openForm();
+});
+
+function openForm() {
+  const firstMember = currentParty.members[0]?.name.split(' ')[0] || '';
+  document.getElementById('form-welcome').textContent = `Welcome, ${firstMember}! Please fill out the RSVP.`;
+
+  document.getElementById('party-members').innerHTML = currentParty.members.map((m, i) => `
+    <div class="member-card">
+      <div class="member-name">${m.name}</div>
+      <div class="member-q">Will ${m.name.split(' ')[0]} be joining us on Saturday Dec 31st?</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="attend-${i}" value="yes" ${m.attending === true ? 'checked' : ''}> Yes</label>
+        <label class="radio-item"><input type="radio" name="attend-${i}" value="no" ${m.attending === false ? 'checked' : ''}> No</label>
+      </div>
+    </div>
+  `).join('');
+
+  // Solo invites can bring along someone not on the guest list (plus-one, baby, etc).
+  const addedField = document.getElementById('added-guests-field');
+  const addedList  = document.getElementById('added-guests-list');
+  addedList.innerHTML = '';
+  if (currentParty.canAddGuests) {
+    addedField.classList.remove('hidden');
+    currentParty.addedGuests.forEach(g => addedList.appendChild(makeAddedGuestRow(g.firstName, g.lastName, g.baby)));
+  } else {
+    addedField.classList.add('hidden');
   }
 
-  partySize = Math.min(Math.max(existingRsvp.partySize || 1, 1), currentGuest.maxParty || 8);
-  document.getElementById('party-num').textContent = partySize;
-
-  const dietaryValues = (existingRsvp.dietary || '')
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
-
+  // Prefill shared dietary/song fields from any previous submission for this party.
+  const dietaryValues = (currentParty.dietary || '').split(',').map(s => s.trim()).filter(Boolean);
   document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+  document.getElementById('other-text').value = '';
   dietaryValues.forEach(val => {
     if (val.startsWith('Other')) {
       document.getElementById('chk-other').checked = true;
@@ -606,56 +681,89 @@ function applyExistingRsvp() {
       if (cb) cb.checked = true;
     }
   });
+  document.getElementById('song-request').value = currentParty.songRequest || '';
 
-  document.getElementById('song-request').value = existingRsvp.songRequest || '';
+  showStep('step-form');
 }
 
-document.getElementById('btn-confirm').addEventListener('click', () => {
-  if (!currentGuest) return;
-  applyExistingRsvp();
-  showStep('step-2');
+function makeAddedGuestRow(firstName = '', lastName = '', baby = false) {
+  const row = document.createElement('div');
+  row.className = 'added-guest-row';
+  row.innerHTML = `
+    <div class="name-field"><input type="text" class="rsvp-input added-first" placeholder="First" value="${escapeHtml(firstName)}"></div>
+    <div class="name-field"><input type="text" class="rsvp-input added-last" placeholder="Last" value="${escapeHtml(lastName)}"></div>
+    <label class="added-guest-baby"><input type="checkbox" class="added-baby" ${baby ? 'checked' : ''}> Baby</label>
+    <button class="remove-guest-btn" type="button" aria-label="Remove guest">&times;</button>
+  `;
+  row.querySelector('.remove-guest-btn').addEventListener('click', () => row.remove());
+  return row;
+}
+
+document.getElementById('btn-add-guest').addEventListener('click', () => {
+  const list = document.getElementById('added-guests-list');
+  if (list.children.length >= MAX_ADDED_GUESTS) return;
+  list.appendChild(makeAddedGuestRow());
 });
 
-// ── Step 2: Attending ─────────────────────
-document.getElementById('btn-yes').addEventListener('click', () => {
-  showStep('step-3');
+document.getElementById('btn-search-again').addEventListener('click', () => {
+  currentParty = null;
+  firstNameInput.value = '';
+  lastNameInput.value = '';
+  showStep('step-search');
 });
 
-document.getElementById('btn-no').addEventListener('click', () => {
-  submitRsvp(false);
-});
-
-// ── Step 3: Party size ────────────────────
-document.getElementById('btn-inc').addEventListener('click', () => {
-  if (partySize < (currentGuest?.maxParty || 8)) {
-    partySize++;
-    document.getElementById('party-num').textContent = partySize;
-  }
-});
-
-document.getElementById('btn-dec').addEventListener('click', () => {
-  if (partySize > 1) {
-    partySize--;
-    document.getElementById('party-num').textContent = partySize;
-  }
+document.getElementById('btn-update-response').addEventListener('click', () => {
+  if (!currentParty) return;
+  openForm();
 });
 
 // ── Submit ────────────────────────────────
-document.getElementById('btn-submit').addEventListener('click', () => {
-  submitRsvp(true);
-});
+document.getElementById('btn-submit').addEventListener('click', () => submitRsvp());
 
-async function submitRsvp(attending) {
-  const errEl  = document.getElementById('form-error');
-  const btnEl  = document.getElementById('btn-submit');
+async function submitRsvp() {
+  const errEl = document.getElementById('form-error');
+  const btnEl = document.getElementById('btn-submit');
   errEl.style.display = 'none';
 
-  if (attending && btnEl) {
-    btnEl.textContent = 'Sending…';
-    btnEl.disabled = true;
+  const picks = currentParty.members.map((m, i) => document.querySelector(`input[name="attend-${i}"]:checked`));
+
+  if (picks.some(p => !p)) {
+    errEl.textContent = 'Please answer for everyone in your party.';
+    errEl.style.display = 'block';
+    return;
   }
 
-  // Collect dietary
+  const officialResponses = currentParty.members.map((m, i) => ({
+    name: m.name,
+    attending: picks[i].value === 'yes',
+  }));
+
+  const addedGuests = [];
+  for (const row of document.querySelectorAll('#added-guests-list .added-guest-row')) {
+    const firstName = row.querySelector('.added-first').value.trim();
+    const lastName  = row.querySelector('.added-last').value.trim();
+    const baby      = row.querySelector('.added-baby').checked;
+    if (!firstName && !lastName) continue; // skip a row left blank
+    if (!firstName || !lastName) {
+      errEl.textContent = "Please enter both first and last name for anyone you're bringing.";
+      errEl.style.display = 'block';
+      return;
+    }
+    addedGuests.push({ firstName, lastName, baby });
+  }
+
+  const addedResponses = addedGuests.map(g => ({
+    name: `${g.firstName} ${g.lastName}`,
+    attending: true,
+    added: true,
+    baby: g.baby,
+  }));
+
+  const responses = [...officialResponses, ...addedResponses];
+
+  btnEl.textContent = 'Sending…';
+  btnEl.disabled = true;
+
   const dietary = [];
   document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(cb => {
     if (cb.value === 'Other') {
@@ -673,18 +781,26 @@ async function submitRsvp(attending) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name:        currentGuest.name,
-        attending:   attending,
-        partySize:   attending ? partySize : 0,
-        dietary:     dietary.join(', ') || 'None',
-        songRequest: attending ? songRequest : '',
+        partyId: currentParty.partyId,
+        responses,
+        dietary: dietary.join(', ') || 'None',
+        songRequest,
       }),
     });
     if (!res.ok) throw new Error('Server error');
-    showStep(attending ? 'step-success' : 'step-decline');
+
+    currentParty.members = officialResponses;
+    currentParty.addedGuests = addedGuests;
+    currentParty.dietary = dietary.join(', ') || 'None';
+    currentParty.songRequest = songRequest;
+
+    showStep('step-success');
   } catch {
-    if (btnEl) { btnEl.textContent = 'Confirm RSVP'; btnEl.disabled = false; }
+    errEl.textContent = 'Something went wrong — please try again.';
     errEl.style.display = 'block';
+  } finally {
+    btnEl.textContent = 'Submit RSVP';
+    btnEl.disabled = false;
   }
 }
 

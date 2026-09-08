@@ -1,4 +1,4 @@
-const { checkEnv, getSheetsClient, findGuest, findExistingRsvp } = require('./_sheets');
+const { norm, checkEnv, getSheetsClient, findGuestByName, findParty, getPartyRsvps } = require('./_sheets');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -12,8 +12,9 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const inputName = String(data.name || '').trim();
-  if (inputName.length < 2) {
+  const firstName = String(data.firstName || '').trim();
+  const lastName = String(data.lastName || '').trim();
+  if (!firstName || !lastName) {
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -28,7 +29,7 @@ exports.handler = async (event) => {
 
   try {
     const sheets = await getSheetsClient();
-    const guest = await findGuest(sheets, inputName);
+    const guest = await findGuestByName(sheets, firstName, lastName);
 
     if (!guest) {
       return {
@@ -38,23 +39,34 @@ exports.handler = async (event) => {
       };
     }
 
-    const existing = await findExistingRsvp(sheets, guest.name);
+    const party = await findParty(sheets, guest.partyId);
+    const officialNames = new Set(party.map((p) => norm(p.name)));
+    const { byName, dietary, songRequest, addedGuests } = await getPartyRsvps(
+      sheets,
+      guest.partyId,
+      officialNames
+    );
+
+    const members = party.map((p) => {
+      const existing = byName[norm(p.name)];
+      return {
+        name: p.name,
+        attending: existing ? existing.attending : null,
+      };
+    });
 
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         found: true,
-        name: guest.name,
-        maxParty: guest.maxParty,
-        existingRsvp: existing
-          ? {
-              attending: existing.attending,
-              partySize: existing.partySize,
-              dietary: existing.dietary,
-              songRequest: existing.songRequest,
-            }
-          : null,
+        partyId: guest.partyId,
+        members,
+        dietary,
+        songRequest,
+        // Only solo parties are offered the "add a guest" option.
+        canAddGuests: party.length === 1,
+        addedGuests,
       }),
     };
   } catch (err) {
