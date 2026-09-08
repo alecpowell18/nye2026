@@ -60,7 +60,7 @@ async function findParty(sheets, partyId) {
 // Solo parties (exactly one registered name) may bring along guests who
 // aren't on the Guests tab (e.g. a plus-one or a baby) — capped so the
 // feature can't be used to smuggle in an unbounded number of extra invites.
-const MAX_ADDED_GUESTS = 4;
+const MAX_ADDED_GUESTS = 1;
 
 // RSVPs!A:G = Timestamp, PartyID, Name, Attending, Dietary, SongRequest, Notes.
 // One row per person; dietary/song are shared across the party and

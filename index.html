@@ -189,7 +189,7 @@ body {
 .rsvp-form { max-width: 400px; margin: 0 auto; text-align: left; }
 
 .rsvp-step { animation: fadeUp 0.35s ease both; }
-.rsvp-step.hidden { display: none; }
+.hidden { display: none; }
 
 .step-q {
   font-family: 'Big Shoulders Display', sans-serif;
@@ -555,7 +555,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 // checked by the guest-lookup function — nothing about who's invited
 // ships to the browser.
 let currentParty = null; // { partyId, members, dietary, songRequest, canAddGuests, addedGuests }
-const MAX_ADDED_GUESTS = 4; // mirrors the server-side cap in netlify/functions/_sheets.js
+const MAX_ADDED_GUESTS = 1; // mirrors the server-side cap in netlify/functions/_sheets.js
 
 function norm(s) { return String(s || '').toLowerCase().trim().replace(/\s+/g, ' '); }
 
@@ -664,6 +664,7 @@ function openForm() {
   if (currentParty.canAddGuests) {
     addedField.classList.remove('hidden');
     currentParty.addedGuests.forEach(g => addedList.appendChild(makeAddedGuestRow(g.firstName, g.lastName, g.baby)));
+    refreshAddGuestButton();
   } else {
     addedField.classList.add('hidden');
   }
@@ -695,14 +696,24 @@ function makeAddedGuestRow(firstName = '', lastName = '', baby = false) {
     <label class="added-guest-baby"><input type="checkbox" class="added-baby" ${baby ? 'checked' : ''}> Baby</label>
     <button class="remove-guest-btn" type="button" aria-label="Remove guest">&times;</button>
   `;
-  row.querySelector('.remove-guest-btn').addEventListener('click', () => row.remove());
+  row.querySelector('.remove-guest-btn').addEventListener('click', () => {
+    row.remove();
+    refreshAddGuestButton();
+  });
   return row;
+}
+
+function refreshAddGuestButton() {
+  const list = document.getElementById('added-guests-list');
+  const btn = document.getElementById('btn-add-guest');
+  btn.classList.toggle('hidden', list.children.length >= MAX_ADDED_GUESTS);
 }
 
 document.getElementById('btn-add-guest').addEventListener('click', () => {
   const list = document.getElementById('added-guests-list');
   if (list.children.length >= MAX_ADDED_GUESTS) return;
   list.appendChild(makeAddedGuestRow());
+  refreshAddGuestButton();
 });
 
 document.getElementById('btn-search-again').addEventListener('click', () => {
