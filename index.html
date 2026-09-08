@@ -20,6 +20,7 @@
   --w15: rgba(255,255,255,0.15);
   --w08: rgba(255,255,255,0.08);
   --w05: rgba(255,255,255,0.05);
+  --font-display: 'Didot', 'Bodoni MT', 'Playfair Display', serif;
 }
 
 html { scroll-behavior: smooth; }
@@ -65,7 +66,7 @@ body {
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 .hero-name {
-  font-family: 'Didot', 'Bodoni MT', 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: clamp(80px, 24vw, 140px); font-weight: 400;
   text-transform: uppercase; letter-spacing: 0.04em; color: #fff; display: block;
   line-height: 0.85;
@@ -90,8 +91,8 @@ body {
 .date-cell + .date-cell { border-left: 0.5px solid var(--w15); }
 .dc-label { font-size: 7px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
 .dc-val {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(28px, 8vw, 46px); font-weight: 700; color: #fff; line-height: 1;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 8vw, 46px); font-weight: 400; color: #fff; line-height: 1;
 }
 .hero-venue {
   font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
@@ -106,9 +107,9 @@ body {
   font-weight: 300; font-style: italic; color: var(--w30); display: block; line-height: 1;
 }
 .sec-title {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(52px, 16vw, 100px); font-weight: 900;
-  text-transform: uppercase; letter-spacing: 0.03em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
+  font-family: var(--font-display);
+  font-size: clamp(52px, 16vw, 100px); font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.05em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
 }
 .cd-wrap {
   display: flex; align-items: flex-start; justify-content: center;
@@ -116,13 +117,13 @@ body {
 }
 .cd-unit { text-align: center; }
 .cd-num {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(44px, 13vw, 80px); font-weight: 700; color: #fff; line-height: 1;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 13vw, 80px); font-weight: 400; color: #fff; line-height: 1;
   display: block; min-width: clamp(50px, 14vw, 90px);
 }
 .cd-lbl { font-size: 7px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--w30); margin-top: 5px; }
 .cd-colon {
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(36px, 10vw, 60px); font-weight: 300;
   color: var(--gold); opacity: 0.6; line-height: 1; align-self: flex-start; padding-top: 5px;
 }
@@ -167,8 +168,8 @@ body {
 .d-row { padding: 2rem 0; border-bottom: 0.5px solid var(--w08); }
 .d-row:last-child { border-bottom: none; }
 .d-label {
-  font-family: 'Big Shoulders Display', sans-serif; font-size: clamp(20px, 6vw, 30px);
-  font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; margin-bottom: 0.5rem;
+  font-family: var(--font-display); font-size: clamp(20px, 6vw, 30px);
+  font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; margin-bottom: 0.5rem;
 }
 .d-val { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--w30); line-height: 2; }
 
@@ -178,8 +179,8 @@ body {
 .faq-row { padding: 2rem 0; border-bottom: 0.5px solid var(--w08); }
 .faq-row:last-child { border-bottom: none; }
 .faq-q {
-  font-family: 'Big Shoulders Display', sans-serif; font-size: clamp(18px, 5vw, 24px);
-  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #fff; margin-bottom: 0.6rem;
+  font-family: var(--font-display); font-size: clamp(18px, 5vw, 24px);
+  font-weight: 400; text-transform: uppercase; letter-spacing: 0.04em; color: #fff; margin-bottom: 0.6rem;
 }
 .faq-a { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; letter-spacing: 0.02em; }
 
@@ -204,9 +205,9 @@ body {
 /* ── RSVP SECTION ─────────────────────── */
 .sec-rsvp { background: #000; padding: 6rem 2rem 7rem; text-align: center; border-top: 0.5px solid var(--w05); }
 .rsvp-please {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(64px, 20vw, 120px); font-weight: 900;
-  text-transform: uppercase; letter-spacing: 0.03em; line-height: 0.9; color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(64px, 20vw, 120px); font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.05em; line-height: 0.9; color: #fff;
 }
 .rsvp-word {
   font-family: 'Playfair Display', serif; font-size: clamp(56px, 18vw, 108px);
@@ -221,8 +222,8 @@ body {
 .hidden { display: none; }
 
 .step-q {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(22px, 6vw, 32px); font-weight: 700;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 6vw, 32px); font-weight: 400;
   text-transform: uppercase; letter-spacing: 0.04em; color: #fff;
   margin-bottom: 1.8rem; text-align: center;
 }
@@ -366,8 +367,8 @@ body {
 /* Success / Decline states */
 .success-icon { font-size: 42px; color: var(--gold); margin-bottom: 1rem; }
 .success-hed {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(32px, 10vw, 60px); font-weight: 900;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 10vw, 60px); font-weight: 400;
   text-transform: uppercase; color: #fff; line-height: 0.9; margin-bottom: 1rem;
 }
 .success-sub { font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
@@ -375,7 +376,7 @@ body {
 /* ── FOOTER ──────────────────────────── */
 footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
 .footer-yr { font-size: 8px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
-.footer-mono { font-family: 'Didot', 'Bodoni MT', 'Playfair Display', serif; font-size: 15px; font-weight: 400; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+.footer-mono { font-family: var(--font-display); font-size: 15px; font-weight: 400; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
 .footer-mono .a { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(184,150,96,0.22); }
 
 /* ── ANIMATIONS ──────────────────────── */
