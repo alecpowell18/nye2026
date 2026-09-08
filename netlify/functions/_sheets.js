@@ -38,7 +38,7 @@ async function getAllGuests(sheets) {
 }
 
 // Exact first+last match against the Guests tab. Returns the matching
-// guest's row or null — no partial/substring matching.
+// guest's row or null; no partial/substring matching.
 async function findGuestByName(sheets, firstName, lastName) {
   const targetFirst = norm(firstName);
   const targetLast = norm(lastName);
@@ -58,7 +58,7 @@ async function findParty(sheets, partyId) {
 }
 
 // Solo parties (exactly one registered name) may bring along guests who
-// aren't on the Guests tab (e.g. a plus-one or a baby) — capped so the
+// aren't on the Guests tab (e.g. a plus-one or a baby); capped so the
 // feature can't be used to smuggle in an unbounded number of extra invites.
 const MAX_ADDED_GUESTS = 1;
 
@@ -66,7 +66,7 @@ const MAX_ADDED_GUESTS = 1;
 // One row per person; dietary/song are shared across the party and
 // duplicated onto each person's row for simplicity. `officialNames` (a Set
 // of normalized full names) distinguishes registered party members from
-// guests someone added themselves — anything not in the set is "added".
+// guests someone added themselves; anything not in the set is "added".
 async function getPartyRsvps(sheets, partyId, officialNames) {
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,

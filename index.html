@@ -11,9 +11,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --gold: #b89660;
-  --gold-light: #d4b483;
-  --silver: #b8b8c4;
+  --gold: #c3a77c;
+  --gold-light: #e0c69f;
+  --silver: #d2d3d7;
   --w80: rgba(255,255,255,0.80);
   --w50: rgba(255,255,255,0.50);
   --w30: rgba(255,255,255,0.30);
@@ -57,45 +57,43 @@ body {
     rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.0) 25%,
     rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.90) 85%, rgba(0,0,0,1) 100%);
 }
-#sparkles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .hero-inner { position: relative; z-index: 2; }
 
 .hero-pre {
-  font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--w80); margin-bottom: 2.2rem;
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 .hero-name {
   font-family: var(--font-display);
   font-size: clamp(80px, 24vw, 140px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: 0.04em; color: #fff; display: block;
+  text-transform: uppercase; letter-spacing: -0.055em; color: #fff; display: block;
   line-height: 0.85;
 }
 .hero-amp {
   font-family: 'Playfair Display', serif;
   font-size: clamp(28px, 8vw, 52px); font-weight: 300; font-style: italic;
-  color: var(--gold); display: block; margin: 0.15em 0; line-height: 1;
+  color: var(--silver); display: block; margin: 0.15em 0; line-height: 1;
 }
 .hero-tag {
-  font-size: 9px; letter-spacing: 0.65em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--gold); margin-top: 1.6rem; margin-bottom: 2.4rem; opacity: 0.85;
 }
 .date-row {
   display: inline-flex; align-items: stretch;
-  border: 0.5px solid var(--w15); margin-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 .date-cell {
-  padding: 0.7rem 1.2rem;
+  padding: 0.7rem 0.6rem;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
 }
-.date-cell + .date-cell { border-left: 0.5px solid var(--w15); }
-.dc-label { font-size: 7px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
+.dc-label { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
 .dc-val {
-  font-family: var(--font-display);
+  font-family: var(--font-display); letter-spacing: -0.055em;
   font-size: clamp(28px, 8vw, 46px); font-weight: 400; color: #fff; line-height: 1;
 }
 .hero-venue {
-  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--w80); margin-top: 0.4rem;
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
@@ -104,12 +102,12 @@ body {
 .sec-countdown { background: #080808; padding: 5.5rem 2rem; text-align: center; }
 .sec-accent {
   font-family: 'Playfair Display', serif; font-size: clamp(20px, 6vw, 34px);
-  font-weight: 300; font-style: italic; color: var(--w30); display: block; line-height: 1;
+  font-weight: 300; font-style: italic; color: var(--silver); display: block; line-height: 1;
 }
 .sec-title {
   font-family: var(--font-display);
   font-size: clamp(52px, 16vw, 100px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: 0.05em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
+  text-transform: uppercase; letter-spacing: -0.055em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
 }
 .cd-wrap {
   display: flex; align-items: flex-start; justify-content: center;
@@ -117,18 +115,18 @@ body {
 }
 .cd-unit { text-align: center; }
 .cd-num {
-  font-family: var(--font-display);
+  font-family: var(--font-display); letter-spacing: -0.055em;
   font-size: clamp(44px, 13vw, 80px); font-weight: 400; color: #fff; line-height: 1;
   display: block; min-width: clamp(50px, 14vw, 90px);
 }
-.cd-lbl { font-size: 7px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--w30); margin-top: 5px; }
+.cd-lbl { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); margin-top: 5px; }
 .cd-colon {
-  font-family: var(--font-display);
+  font-family: var(--font-display); letter-spacing: -0.055em;
   font-size: clamp(36px, 10vw, 60px); font-weight: 300;
-  color: var(--gold); opacity: 0.6; line-height: 1; align-self: flex-start; padding-top: 5px;
+  color: var(--silver); opacity: 0.85; line-height: 1; align-self: flex-start; padding-top: 5px;
 }
 .cd-tagline { margin-top: 2.8rem; }
-.cd-sub { font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); }
+.cd-sub { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
 .cd-big {
   font-family: 'Playfair Display', serif; font-size: clamp(30px, 9vw, 54px);
   font-weight: 300; font-style: italic; color: var(--w80); line-height: 1.1; margin: 0.3rem 0 0.2rem;
@@ -145,18 +143,18 @@ body {
   filter: saturate(0.65) brightness(0.9);
 }
 .venue-name {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: clamp(28px, 8vw, 46px); font-weight: 900;
-  text-transform: uppercase; letter-spacing: 0.04em; color: #fff; line-height: 1; margin-bottom: 0.9rem;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 8vw, 46px); font-weight: 400;
+  text-transform: uppercase; letter-spacing: -0.055em; color: #fff; line-height: 1; margin-bottom: 0.9rem;
 }
-.venue-address { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--w30); line-height: 2; margin-bottom: 1.4rem; }
+.venue-address { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w80); line-height: 2; margin-bottom: 1.4rem; }
 .venue-desc {
-  font-size: 13px; color: rgba(255,255,255,0.32);
+  font-size: 16px; color: var(--w80);
   max-width: 360px; margin: 0 auto 2.2rem; line-height: 1.95; letter-spacing: 0.03em;
 }
 .pill {
-  display: inline-block; font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
-  color: #fff; background: transparent; border: 0.5px solid var(--w30); border-radius: 100px;
+  display: inline-block; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--silver); background: transparent; border: 0.5px solid var(--silver); border-radius: 100px;
   padding: 0.85rem 2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s;
   font-family: 'Tenor Sans', sans-serif; cursor: pointer;
 }
@@ -169,24 +167,24 @@ body {
 .d-row:last-child { border-bottom: none; }
 .d-label {
   font-family: var(--font-display); font-size: clamp(20px, 6vw, 30px);
-  font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; margin-bottom: 0.5rem;
+  font-weight: 400; text-transform: uppercase; letter-spacing: -0.055em; color: #fff; margin-bottom: 0.5rem;
 }
-.d-val { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--w30); line-height: 2; }
+.d-val { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); line-height: 2; }
 
 /* ── FAQ ────────────────────────────────── */
 .sec-faq { background: #000; border-top: 0.5px solid var(--w05); padding: 5.5rem 2rem; text-align: center; }
-.faq-rows { max-width: 420px; margin: 0 auto; text-align: left; }
+.faq-rows { max-width: 600px; margin: 0 auto; text-align: left; }
 .faq-row { padding: 2rem 0; border-bottom: 0.5px solid var(--w08); }
 .faq-row:last-child { border-bottom: none; }
 .faq-q {
   font-family: var(--font-display); font-size: clamp(18px, 5vw, 24px);
-  font-weight: 400; text-transform: uppercase; letter-spacing: 0.04em; color: #fff; margin-bottom: 0.6rem;
+  font-weight: 400; text-transform: uppercase; letter-spacing: -0.055em; color: #fff; margin-bottom: 0.6rem;
 }
-.faq-a { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; letter-spacing: 0.02em; }
+.faq-a { font-size: 16px; color: var(--w80); line-height: 1.8; letter-spacing: 0.02em; }
 
 /* ── PHOTO BACKGROUNDS ────────────────── */
 /* Fixed background photos behind the darker sections, so they hold in
-   place as the section content scrolls over them — degrades to a normal
+   place as the section content scrolls over them; degrades to a normal
    scrolling background on phones, where `fixed` isn't well supported. */
 .sec-photo-bg {
   background-size: cover;
@@ -197,8 +195,8 @@ body {
 @media (max-width: 768px) {
   .sec-photo-bg { background-attachment: scroll; }
 }
-.bg-columns    { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-02.jpg'); }
-.bg-vows       { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-03.jpg'); }
+.bg-columns { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-02.jpg'); }
+.bg-vows { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-03.jpg'); }
 .bg-urn        { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-05.jpg'); }
 .bg-goldengate { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-06.jpg'); }
 
@@ -207,13 +205,13 @@ body {
 .rsvp-please {
   font-family: var(--font-display);
   font-size: clamp(64px, 20vw, 120px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: 0.05em; line-height: 0.9; color: #fff;
+  text-transform: uppercase; letter-spacing: -0.055em; line-height: 0.9; color: #fff;
 }
 .rsvp-word {
   font-family: 'Playfair Display', serif; font-size: clamp(56px, 18vw, 108px);
-  font-weight: 300; font-style: italic; color: var(--gold); line-height: 0.95; margin-bottom: 0.5rem;
+  font-weight: 300; font-style: italic; color: var(--silver); line-height: 0.95; margin-bottom: 0.5rem;
 }
-.rsvp-deadline { font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); margin-bottom: 3rem; }
+.rsvp-deadline { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); margin-bottom: 3rem; }
 
 /* ── RSVP FORM ────────────────────────── */
 .rsvp-form { max-width: 400px; margin: 0 auto; text-align: left; }
@@ -224,7 +222,7 @@ body {
 .step-q {
   font-family: var(--font-display);
   font-size: clamp(22px, 6vw, 32px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: 0.04em; color: #fff;
+  text-transform: uppercase; letter-spacing: -0.055em; color: #fff;
   margin-bottom: 1.8rem; text-align: center;
 }
 
@@ -241,7 +239,7 @@ body {
 
 .name-result {
   min-height: 1.5rem; text-align: center; margin: 1.2rem 0 1.5rem;
-  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; line-height: 1.6;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.6;
 }
 .name-found { color: var(--gold); }
 .name-not-found { color: var(--w30); }
@@ -270,11 +268,11 @@ body {
   font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 5vw, 22px);
   color: #fff; margin-bottom: 1rem;
 }
-.member-q { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--w30); margin-bottom: 0.9rem; }
+.member-q { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); margin-bottom: 0.9rem; }
 .radio-group { display: flex; gap: 1.8rem; }
 .radio-item {
   display: flex; align-items: center; gap: 0.6rem;
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--w50); cursor: pointer; transition: color 0.2s;
 }
 .radio-item:hover { color: #fff; }
@@ -286,16 +284,16 @@ body {
 
 /* Form fields */
 .form-field { margin-bottom: 2.5rem; }
-.field-label { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 1.2rem; }
+.field-label { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 1.2rem; }
 
 /* Added guests (solo invites bringing someone not on the list) */
 .added-guest-row {
   display: flex; align-items: flex-end; gap: 0.8rem; margin-bottom: 1rem;
 }
-.added-guest-row .name-field .rsvp-input { font-size: 15px; padding: 0.5rem 0; }
+.added-guest-row .name-field .rsvp-input { font-size: 16px; padding: 0.5rem 0; }
 .added-guest-baby {
   display: flex; align-items: center; gap: 0.5rem;
-  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--w50);
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w50);
   cursor: pointer; white-space: nowrap; padding-bottom: 0.6rem;
 }
 .added-guest-baby input[type="checkbox"] {
@@ -311,7 +309,7 @@ body {
 }
 .remove-guest-btn:hover { border-color: #d97070; color: #d97070; }
 .add-guest-btn {
-  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
   background: none; border: none; cursor: pointer; padding: 0.5rem 0;
 }
 .add-guest-btn:hover { color: var(--gold-light); }
@@ -320,7 +318,7 @@ body {
 .checkbox-group { display: flex; flex-direction: column; gap: 1rem; }
 .check-item {
   display: flex; align-items: center; gap: 1rem;
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--w50); cursor: pointer; transition: color 0.2s;
 }
 .check-item:hover { color: #fff; }
@@ -332,8 +330,8 @@ body {
 
 .other-input {
   background: transparent; border: none; border-bottom: 0.5px solid var(--w15);
-  color: #fff; font-family: 'Tenor Sans', sans-serif; font-size: 10px;
-  letter-spacing: 0.2em; outline: none; padding: 0 0 2px; width: 130px; transition: border-color 0.2s;
+  color: #fff; font-family: 'Tenor Sans', sans-serif; font-size: 16px;
+  letter-spacing: 0.12em; outline: none; padding: 0 0 2px; width: 130px; transition: border-color 0.2s;
 }
 .other-input:focus { border-bottom-color: var(--gold); }
 .other-input::placeholder { color: var(--w30); }
@@ -341,7 +339,7 @@ body {
 .song-input {
   width: 100%; background: transparent; border: none;
   border-bottom: 0.5px solid var(--w15); color: #fff;
-  font-family: 'Tenor Sans', sans-serif; font-size: 12px;
+  font-family: 'Tenor Sans', sans-serif; font-size: 16px;
   letter-spacing: 0.1em; outline: none; padding: 0 0 0.6rem; transition: border-color 0.2s;
 }
 .song-input:focus { border-bottom-color: var(--gold); }
@@ -349,7 +347,7 @@ body {
 
 /* Submit */
 .pill-gold {
-  display: inline-block; font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
+  display: inline-block; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: #000; background: var(--gold); border-radius: 100px;
   padding: 1rem 2.4rem; text-decoration: none; transition: background 0.25s;
   border: none; cursor: pointer; font-family: 'Tenor Sans', sans-serif;
@@ -360,23 +358,23 @@ body {
 .submit-wrap { text-align: center; margin-top: 2.5rem; }
 
 .form-error {
-  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: #d97070; text-align: center; margin-top: 1rem; display: none;
 }
 
 /* Success / Decline states */
 .success-icon { font-size: 42px; color: var(--gold); margin-bottom: 1rem; }
 .success-hed {
-  font-family: var(--font-display);
+  font-family: var(--font-display); letter-spacing: -0.055em;
   font-size: clamp(32px, 10vw, 60px); font-weight: 400;
   text-transform: uppercase; color: #fff; line-height: 0.9; margin-bottom: 1rem;
 }
-.success-sub { font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--w30); }
+.success-sub { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
 
 /* ── FOOTER ──────────────────────────── */
 footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
-.footer-yr { font-size: 8px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
-.footer-mono { font-family: var(--font-display); font-size: 15px; font-weight: 400; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+.footer-yr { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
+.footer-mono { font-family: var(--font-display); font-size: 16px; font-weight: 400; letter-spacing: -0.055em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
 .footer-mono .a { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(184,150,96,0.22); }
 
 /* ── ANIMATIONS ──────────────────────── */
@@ -387,14 +385,24 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 @keyframes breathe {
   0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
 }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+/* Short entrances and reflective accents inspired by the reception lights. */
+.sec-countdown { position: relative; overflow: hidden; padding-block: clamp(6rem, 12vw, 10rem); }
+.bg-vows .d-val, .bg-columns .cd-lbl, .bg-columns .cd-sub { color: var(--w80); }
+.cd-num { font-variant-numeric: tabular-nums; }
+.pill, .pill-gold { transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease; }
+.pill:hover, .pill-gold:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(212,180,131,0.18); }
+.pill:focus-visible, .pill-gold:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+  .pill:hover, .pill-gold:hover { transform: none; }
+}
 </style>
 </head>
 <body>
 
 <!-- ── HERO ──────────────────────────── -->
 <section class="hero">
-  <canvas id="sparkles"></canvas>
   <img class="hero-bg"
     src="images/hero-bouquet.jpg"
     alt="Bride and groom detail with bouquet">
@@ -426,26 +434,6 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   </div>
 </section>
 
-<!-- ── COUNTDOWN ───────────────────────── -->
-<section class="sec-countdown sec-photo-bg bg-columns">
-  <span class="sec-accent">the</span>
-  <div class="sec-title">Countdown</div>
-  <div class="cd-wrap">
-    <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><div class="cd-lbl">Days</div></div>
-    <span class="cd-colon">:</span>
-    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><div class="cd-lbl">Hours</div></div>
-    <span class="cd-colon">:</span>
-    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><div class="cd-lbl">Minutes</div></div>
-    <span class="cd-colon">:</span>
-    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><div class="cd-lbl">Seconds</div></div>
-  </div>
-  <div class="cd-tagline">
-    <div class="cd-sub">We can't wait to</div>
-    <div class="cd-big">celebrate</div>
-    <div class="cd-sub">with you</div>
-  </div>
-</section>
-
 <!-- ── VENUE ──────────────────────────── -->
 <section class="sec-venue">
   <span class="sec-accent">the</span>
@@ -456,7 +444,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   </div>
   <div class="venue-name">Alila Marea<br>Beach Resort</div>
   <div class="venue-address">2100 N Coast Highway 101<br>Encinitas, California &nbsp;92024</div>
-  <p class="venue-desc">Perched above the Pacific on a seaside bluff — natural stone, warm wood, and the endless California horizon. The perfect place to watch one year become the next.</p>
+  <p class="venue-desc">Perched above the Pacific on a seaside bluff, with natural stone, warm wood, and the endless California horizon. The perfect place to watch one year become the next.</p>
   <a class="pill" href="https://maps.google.com/?q=Alila+Marea+Beach+Resort+Encinitas+CA" target="_blank" rel="noopener">Google Maps</a>
 </section>
 
@@ -471,7 +459,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
     </div>
     <div class="d-row">
       <div class="d-label">The Evening</div>
-      <div class="d-val">6:00 PM — Cocktail Hour<br>Dinner &amp; Dancing<br>Midnight Toast &amp; Champagne<br>Until 12:30 AM</div>
+      <div class="d-val">6:00 PM: Cocktail Hour<br>Dinner &amp; Dancing<br>Midnight Toast &amp; Champagne<br>Until 12:30 AM</div>
     </div>
     <div class="d-row">
       <div class="d-label">Location</div>
@@ -493,11 +481,11 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
       <div class="step-q">Find your RSVP</div>
       <div class="name-row">
         <div class="name-field">
-          <label class="field-label">First Name</label>
+          <label class="field-label" for="first-name-input">First Name</label>
           <input class="rsvp-input" id="first-name-input" type="text" autocomplete="given-name" spellcheck="false">
         </div>
         <div class="name-field">
-          <label class="field-label">Last Name</label>
+          <label class="field-label" for="last-name-input">Last Name</label>
           <input class="rsvp-input" id="last-name-input" type="text" autocomplete="family-name" spellcheck="false">
         </div>
       </div>
@@ -552,7 +540,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 
       <div class="submit-wrap">
         <button class="pill-gold" id="btn-submit">Submit RSVP</button>
-        <div class="form-error" id="form-error">Something went wrong — please try again.</div>
+        <div class="form-error" id="form-error">Something went wrong. Please try again.</div>
       </div>
       <div class="submit-wrap">
         <button class="pill" id="btn-search-again" type="button">Search Again</button>
@@ -578,10 +566,65 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   <div class="sec-title">FAQ</div>
   <div class="faq-rows">
     <div class="faq-row">
-      <div class="faq-q">Question goes here?</div>
-      <div class="faq-a">Answer goes here.</div>
+      <h3 class="faq-q">What is the dress code?</h3>
+      <p class="faq-a">Black tie optional. We’d love for everyone to dress up with us! Tuxedos and gowns are welcome, but suits and cocktail or formal dresses are perfect too.</p>
     </div>
-    <!-- Add more .faq-row blocks as needed -->
+    <div class="faq-row">
+      <h3 class="faq-q">Is this a wedding?</h3>
+      <p class="faq-a">Not really!</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Will the celebration be indoors or outdoors?</h3>
+      <p class="faq-a">The celebration will take place primarily indoors, with some outdoor spaces available throughout the evening. We recommend bringing a layer for the cooler coastal weather.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Can I bring a plus one?</h3>
+      <p class="faq-a"><strong>Yes!</strong> Everyone is welcome to bring a plus one. Please be sure to include your guest’s name when you RSVP.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Are children invited?</h3>
+      <p class="faq-a"><strong>Of course!</strong> The littlest important people in our lives are invited too. Please include them when you RSVP.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Will dinner be served?</h3>
+      <p class="faq-a">Yes! Dinner, drinks, and plenty of late-night celebrating will be provided.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Is there parking or valet?</h3>
+      <p class="faq-a">Yes, valet parking will be available at the resort.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Where should I stay?</h3>
+      <p class="faq-a">We have reserved a room block at <strong>Alila Marea Beach Resort</strong> at a rate of <strong>$349+ per night</strong>, with a two-night minimum stay. Please note that the room rate does not include the 10% room tax, $55 nightly resort fee, or $60 nightly overnight parking fee.</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">Do you have a registry?</h3>
+      <p class="faq-a">No!</p>
+    </div>
+    <div class="faq-row">
+      <h3 class="faq-q">What time will the reception end?</h3>
+      <p class="faq-a">The celebration will officially wrap up at <strong>12:30 AM</strong>, after we ring in 2027 together!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COUNTDOWN ───────────────────────── -->
+<section class="sec-countdown sec-photo-bg bg-columns">
+  <span class="sec-accent">the</span>
+  <div class="sec-title">Countdown</div>
+  <div class="cd-wrap">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><div class="cd-lbl">Days</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><div class="cd-lbl">Hours</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><div class="cd-lbl">Minutes</div></div>
+    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><div class="cd-lbl">Seconds</div></div>
+  </div>
+  <div class="cd-tagline">
+    <div class="cd-sub">We can't wait to</div>
+    <div class="cd-big">celebrate</div>
+    <div class="cd-sub">with you</div>
   </div>
 </section>
 
@@ -594,7 +637,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 <script>
 // ── State ─────────────────────────────────
 // The guest list lives server-side (Google Sheet "Guests" tab) and is
-// checked by the guest-lookup function — nothing about who's invited
+// checked by the guest-lookup function; nothing about who's invited
 // ships to the browser.
 let currentParty = null; // { partyId, members, dietary, songRequest, canAddGuests, addedGuests }
 const MAX_ADDED_GUESTS = 1; // mirrors the server-side cap in netlify/functions/_sheets.js
@@ -670,7 +713,7 @@ async function findParty() {
     showStep('step-party');
   } else {
     currentParty = null;
-    searchResult.innerHTML = `<span class="name-not-found">We couldn't find that name —<br>double-check spelling</span>`;
+    searchResult.innerHTML = `<span class="name-not-found">We couldn't find that name.<br>Please double-check spelling</span>`;
   }
 }
 
@@ -849,7 +892,7 @@ async function submitRsvp() {
 
     showStep('step-success');
   } catch {
-    errEl.textContent = 'Something went wrong — please try again.';
+    errEl.textContent = 'Something went wrong. Please try again.';
     errEl.style.display = 'block';
   } finally {
     btnEl.textContent = 'Submit RSVP';
@@ -874,34 +917,32 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-// ── Sparkles ─────────────────────────────
-const C = document.getElementById('sparkles');
-const X = C.getContext('2d');
-function resize() { C.width = C.offsetWidth; C.height = C.offsetHeight; }
-resize(); window.addEventListener('resize', resize);
-const pts = Array.from({length: 90}, () => ({
-  x: Math.random(), y: Math.random(),
-  r: Math.random() * 1.3 + 0.2,
-  spd: Math.random() * 0.0001 + 0.00003,
-  op: Math.random() * 0.45 + 0.08,
-  ph: Math.random() * Math.PI * 2,
-  ps: Math.random() * 0.01 + 0.003,
-  gold: Math.random() > 0.5
-}));
-function draw() {
-  X.clearRect(0, 0, C.width, C.height);
-  pts.forEach(p => {
-    p.y -= p.spd; if (p.y < -0.01) p.y = 1.01;
-    p.ph += p.ps;
-    const a = p.op * (0.4 + 0.6 * Math.sin(p.ph));
-    X.beginPath();
-    X.arc(p.x * C.width, p.y * C.height, p.r, 0, Math.PI*2);
-    X.fillStyle = p.gold ? `rgba(212,178,128,${a})` : `rgba(195,195,210,${a})`;
-    X.fill();
-  });
-  requestAnimationFrame(draw);
+// Short, viewport-triggered celebration animations.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+const activeEntrances = new Set();
+if ('IntersectionObserver' in window) {
+  const entrances = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entrances.unobserve(entry.target);
+      if (motionPreference.matches || !entry.target.animate) return;
+      const animation = entry.target.animate([
+        { opacity: 0, transform: 'translateY(18px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], { duration: 850, easing: 'cubic-bezier(.2,.7,.2,1)' });
+      activeEntrances.add(animation);
+      animation.onfinish = () => activeEntrances.delete(animation);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.hero-inner, .sec-title, .venue-photo, .venue-name, .d-row, .rsvp-please, .faq-row, .cd-wrap, .cd-tagline')
+    .forEach(element => entrances.observe(element));
 }
-draw();
+
+motionPreference.addEventListener('change', () => {
+  if (!motionPreference.matches) return;
+  activeEntrances.forEach(animation => animation.cancel());
+  activeEntrances.clear();
+});
 </script>
 </body>
 </html>
