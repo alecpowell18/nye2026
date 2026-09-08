@@ -282,19 +282,27 @@ body {
 }
 .radio-item input[type="radio"]:checked { background: var(--gold); border-color: var(--gold); }
 
+/* Per-member dietary restrictions, nested inside a member-card or added-guest-row */
+.member-dietary { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 0.5px solid var(--w08); }
+.field-label-sm { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 0.9rem; }
+.member-dietary .checkbox-group, .added-guest-row .checkbox-group { gap: 0.7rem; }
+.member-dietary .check-item, .added-guest-row .check-item { font-size: 14px; }
+
 /* Form fields */
 .form-field { margin-bottom: 2.5rem; }
 .field-label { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); display: block; margin-bottom: 1.2rem; }
 
 /* Added guests (solo invites bringing someone not on the list) */
 .added-guest-row {
-  display: flex; align-items: flex-end; gap: 0.8rem; margin-bottom: 1rem;
+  border: 0.5px solid var(--w08); border-radius: 10px;
+  padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; position: relative;
 }
+.added-guest-row .name-row { margin-bottom: 0.8rem; padding-right: 2rem; }
 .added-guest-row .name-field .rsvp-input { font-size: 16px; padding: 0.5rem 0; }
 .added-guest-baby {
   display: flex; align-items: center; gap: 0.5rem;
   font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w50);
-  cursor: pointer; white-space: nowrap; padding-bottom: 0.6rem;
+  cursor: pointer; white-space: nowrap;
 }
 .added-guest-baby input[type="checkbox"] {
   appearance: none; width: 14px; height: 14px; border: 0.5px solid var(--w30);
@@ -302,10 +310,11 @@ body {
 }
 .added-guest-baby input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
 .remove-guest-btn {
+  position: absolute; top: 1.2rem; right: 1.4rem;
   width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--w15);
   background: transparent; color: var(--w50); font-size: 16px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; line-height: 1;
-  flex-shrink: 0; margin-bottom: 0.5rem; transition: all 0.2s;
+  flex-shrink: 0; transition: all 0.2s;
 }
 .remove-guest-btn:hover { border-color: #d97070; color: #d97070; }
 .add-guest-btn {
@@ -519,21 +528,6 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
       </div>
 
       <div class="form-field">
-        <label class="field-label">Dietary restrictions</label>
-        <div class="checkbox-group">
-          <label class="check-item"><input type="checkbox" value="None"> No restrictions</label>
-          <label class="check-item"><input type="checkbox" value="Vegetarian"> Vegetarian</label>
-          <label class="check-item"><input type="checkbox" value="Vegan"> Vegan</label>
-          <label class="check-item"><input type="checkbox" value="Gluten-free"> Gluten-free</label>
-          <label class="check-item"><input type="checkbox" value="Nut allergy"> Nut allergy</label>
-          <label class="check-item">
-            <input type="checkbox" value="Other" id="chk-other"> Other:
-            <input type="text" id="other-text" class="other-input" placeholder="please specify">
-          </label>
-        </div>
-      </div>
-
-      <div class="form-field">
         <label class="field-label">Song request</label>
         <input type="text" id="song-request" class="song-input" placeholder="What'll get you on the dance floor?">
       </div>
@@ -655,6 +649,59 @@ function splitName(full) {
   return { firstName, lastName };
 }
 
+// ── Per-guest dietary restrictions ────────
+// Each attendee (party member or added guest) gets their own dietary
+// checkbox group, scoped by container rather than element id since a
+// party can have several of these on screen at once.
+function dietaryFieldHtml() {
+  return `
+    <div class="member-dietary">
+      <label class="field-label-sm">Dietary restrictions</label>
+      <div class="checkbox-group">
+        <label class="check-item"><input type="checkbox" value="None"> No restrictions</label>
+        <label class="check-item"><input type="checkbox" value="Vegetarian"> Vegetarian</label>
+        <label class="check-item"><input type="checkbox" value="Vegan"> Vegan</label>
+        <label class="check-item"><input type="checkbox" value="Gluten-free"> Gluten-free</label>
+        <label class="check-item"><input type="checkbox" value="Nut allergy"> Nut allergy</label>
+        <label class="check-item">
+          <input type="checkbox" value="Other" class="chk-other"> Other:
+          <input type="text" class="other-input" placeholder="please specify">
+        </label>
+      </div>
+    </div>
+  `;
+}
+
+function setDietaryValues(container, dietaryStr) {
+  const values = (dietaryStr || '').split(',').map(s => s.trim()).filter(Boolean);
+  container.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+  const otherText = container.querySelector('.other-input');
+  if (otherText) otherText.value = '';
+  values.forEach(val => {
+    if (val.startsWith('Other')) {
+      const chkOther = container.querySelector('.chk-other');
+      if (chkOther) chkOther.checked = true;
+      if (otherText) otherText.value = val.replace(/^Other:\s*/, '');
+    } else {
+      const cb = container.querySelector(`.checkbox-group input[value="${CSS.escape(val)}"]`);
+      if (cb) cb.checked = true;
+    }
+  });
+}
+
+function getDietaryValue(container) {
+  const dietary = [];
+  container.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(cb => {
+    if (cb.classList.contains('chk-other')) {
+      const t = container.querySelector('.other-input').value.trim();
+      dietary.push(t ? 'Other: ' + t : 'Other');
+    } else {
+      dietary.push(cb.value);
+    }
+  });
+  return dietary.join(', ') || 'None';
+}
+
 // ── Step helpers ──────────────────────────
 function showStep(id) {
   document.querySelectorAll('.rsvp-step').forEach(s => s.classList.add('hidden'));
@@ -702,10 +749,9 @@ async function findParty() {
     currentParty = {
       partyId: data.partyId,
       members: data.members,
-      dietary: data.dietary || '',
       songRequest: data.songRequest || '',
       canAddGuests: !!data.canAddGuests,
-      addedGuests: (data.addedGuests || []).map(g => ({ ...splitName(g.name), baby: g.baby })),
+      addedGuests: (data.addedGuests || []).map(g => ({ ...splitName(g.name), baby: g.baby, dietary: g.dietary || '' })),
     };
     searchResult.innerHTML = '';
     document.getElementById('party-names').innerHTML =
@@ -732,15 +778,21 @@ function openForm() {
   document.getElementById('form-welcome').textContent = `Welcome, ${firstMember}! Please fill out the RSVP.`;
 
   document.getElementById('party-members').innerHTML = currentParty.members.map((m, i) => `
-    <div class="member-card">
+    <div class="member-card" data-member-index="${i}">
       <div class="member-name">${m.name}</div>
       <div class="member-q">Will ${m.name.split(' ')[0]} be joining us on Saturday Dec 31st?</div>
       <div class="radio-group">
         <label class="radio-item"><input type="radio" name="attend-${i}" value="yes" ${m.attending === true ? 'checked' : ''}> Yes</label>
         <label class="radio-item"><input type="radio" name="attend-${i}" value="no" ${m.attending === false ? 'checked' : ''}> No</label>
       </div>
+      ${dietaryFieldHtml()}
     </div>
   `).join('');
+
+  currentParty.members.forEach((m, i) => {
+    const card = document.querySelector(`.member-card[data-member-index="${i}"]`);
+    setDietaryValues(card, m.dietary);
+  });
 
   // Solo invites can bring along someone not on the guest list (plus-one, baby, etc).
   const addedField = document.getElementById('added-guests-field');
@@ -748,39 +800,31 @@ function openForm() {
   addedList.innerHTML = '';
   if (currentParty.canAddGuests) {
     addedField.classList.remove('hidden');
-    currentParty.addedGuests.forEach(g => addedList.appendChild(makeAddedGuestRow(g.firstName, g.lastName, g.baby)));
+    currentParty.addedGuests.forEach(g => addedList.appendChild(makeAddedGuestRow(g.firstName, g.lastName, g.baby, g.dietary)));
     refreshAddGuestButton();
   } else {
     addedField.classList.add('hidden');
   }
 
-  // Prefill shared dietary/song fields from any previous submission for this party.
-  const dietaryValues = (currentParty.dietary || '').split(',').map(s => s.trim()).filter(Boolean);
-  document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => { cb.checked = false; });
-  document.getElementById('other-text').value = '';
-  dietaryValues.forEach(val => {
-    if (val.startsWith('Other')) {
-      document.getElementById('chk-other').checked = true;
-      document.getElementById('other-text').value = val.replace(/^Other:\s*/, '');
-    } else {
-      const cb = document.querySelector(`.checkbox-group input[value="${CSS.escape(val)}"]`);
-      if (cb) cb.checked = true;
-    }
-  });
+  // Prefill the shared song-request field from any previous submission for this party.
   document.getElementById('song-request').value = currentParty.songRequest || '';
 
   showStep('step-form');
 }
 
-function makeAddedGuestRow(firstName = '', lastName = '', baby = false) {
+function makeAddedGuestRow(firstName = '', lastName = '', baby = false, dietary = '') {
   const row = document.createElement('div');
   row.className = 'added-guest-row';
   row.innerHTML = `
-    <div class="name-field"><input type="text" class="rsvp-input added-first" placeholder="First" value="${escapeHtml(firstName)}"></div>
-    <div class="name-field"><input type="text" class="rsvp-input added-last" placeholder="Last" value="${escapeHtml(lastName)}"></div>
-    <label class="added-guest-baby"><input type="checkbox" class="added-baby" ${baby ? 'checked' : ''}> Baby</label>
     <button class="remove-guest-btn" type="button" aria-label="Remove guest">&times;</button>
+    <div class="name-row">
+      <div class="name-field"><input type="text" class="rsvp-input added-first" placeholder="First" value="${escapeHtml(firstName)}"></div>
+      <div class="name-field"><input type="text" class="rsvp-input added-last" placeholder="Last" value="${escapeHtml(lastName)}"></div>
+    </div>
+    <label class="added-guest-baby"><input type="checkbox" class="added-baby" ${baby ? 'checked' : ''}> Baby</label>
+    ${dietaryFieldHtml()}
   `;
+  setDietaryValues(row, dietary);
   row.querySelector('.remove-guest-btn').addEventListener('click', () => {
     row.remove();
     refreshAddGuestButton();
@@ -829,10 +873,14 @@ async function submitRsvp() {
     return;
   }
 
-  const officialResponses = currentParty.members.map((m, i) => ({
-    name: m.name,
-    attending: picks[i].value === 'yes',
-  }));
+  const officialResponses = currentParty.members.map((m, i) => {
+    const card = document.querySelector(`.member-card[data-member-index="${i}"]`);
+    return {
+      name: m.name,
+      attending: picks[i].value === 'yes',
+      dietary: getDietaryValue(card),
+    };
+  });
 
   const addedGuests = [];
   for (const row of document.querySelectorAll('#added-guests-list .added-guest-row')) {
@@ -845,7 +893,7 @@ async function submitRsvp() {
       errEl.style.display = 'block';
       return;
     }
-    addedGuests.push({ firstName, lastName, baby });
+    addedGuests.push({ firstName, lastName, baby, dietary: getDietaryValue(row) });
   }
 
   const addedResponses = addedGuests.map(g => ({
@@ -853,22 +901,13 @@ async function submitRsvp() {
     attending: true,
     added: true,
     baby: g.baby,
+    dietary: g.dietary,
   }));
 
   const responses = [...officialResponses, ...addedResponses];
 
   btnEl.textContent = 'Sending…';
   btnEl.disabled = true;
-
-  const dietary = [];
-  document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(cb => {
-    if (cb.value === 'Other') {
-      const t = document.getElementById('other-text').value.trim();
-      dietary.push(t ? 'Other: ' + t : 'Other');
-    } else {
-      dietary.push(cb.value);
-    }
-  });
 
   const songRequest = document.getElementById('song-request').value.trim();
 
@@ -879,7 +918,6 @@ async function submitRsvp() {
       body: JSON.stringify({
         partyId: currentParty.partyId,
         responses,
-        dietary: dietary.join(', ') || 'None',
         songRequest,
       }),
     });
@@ -887,7 +925,6 @@ async function submitRsvp() {
 
     currentParty.members = officialResponses;
     currentParty.addedGuests = addedGuests;
-    currentParty.dietary = dietary.join(', ') || 'None';
     currentParty.songRequest = songRequest;
 
     showStep('step-success');

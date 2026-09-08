@@ -14,7 +14,6 @@ exports.handler = async (event) => {
 
   const partyId = String(data.partyId || '').trim();
   const responses = Array.isArray(data.responses) ? data.responses : [];
-  const dietary = data.dietary || 'None';
   const songRequest = data.songRequest || '';
 
   if (!partyId || responses.length === 0) {
@@ -58,6 +57,7 @@ exports.handler = async (event) => {
       }
 
       const attending = isOfficial ? !!r.attending : true; // added guests always accompany the host
+      const dietary = String(r.dietary || '').trim() || 'None';
       const notes = !isOfficial && r.baby ? 'Baby' : '';
       const row = [timestamp, partyId, name, attending ? 'YES' : 'NO', dietary, songRequest, notes];
       const existing = byName[norm(name)];

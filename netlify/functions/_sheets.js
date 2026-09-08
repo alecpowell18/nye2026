@@ -63,10 +63,11 @@ async function findParty(sheets, partyId) {
 const MAX_ADDED_GUESTS = 1;
 
 // RSVPs!A:G = Timestamp, PartyID, Name, Attending, Dietary, SongRequest, Notes.
-// One row per person; dietary/song are shared across the party and
-// duplicated onto each person's row for simplicity. `officialNames` (a Set
-// of normalized full names) distinguishes registered party members from
-// guests someone added themselves; anything not in the set is "added".
+// One row per person; dietary is per-person, song request is shared across
+// the party and duplicated onto each person's row for simplicity.
+// `officialNames` (a Set of normalized full names) distinguishes registered
+// party members from guests someone added themselves; anything not in the
+// set is "added".
 async function getPartyRsvps(sheets, partyId, officialNames) {
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
@@ -76,7 +77,6 @@ async function getPartyRsvps(sheets, partyId, officialNames) {
 
   const byName = {};
   const addedGuests = [];
-  let dietary = '';
   let songRequest = '';
 
   rows.forEach((row, idx) => {
@@ -85,15 +85,15 @@ async function getPartyRsvps(sheets, partyId, officialNames) {
     byName[norm(name)] = {
       rowNumber: idx + 1, // 1-based sheet row, since range starts at row 1
       attending: row[3] === 'YES',
+      dietary: row[4] || '',
     };
-    if (row[4]) dietary = row[4];
     if (row[5]) songRequest = row[5];
     if (!officialNames.has(norm(name))) {
-      addedGuests.push({ name, baby: (row[6] || '').toLowerCase() === 'baby' });
+      addedGuests.push({ name, baby: (row[6] || '').toLowerCase() === 'baby', dietary: row[4] || '' });
     }
   });
 
-  return { byName, dietary, songRequest, addedGuests };
+  return { byName, songRequest, addedGuests };
 }
 
 module.exports = {

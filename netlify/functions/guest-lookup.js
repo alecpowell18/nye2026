@@ -41,7 +41,7 @@ exports.handler = async (event) => {
 
     const party = await findParty(sheets, guest.partyId);
     const officialNames = new Set(party.map((p) => norm(p.name)));
-    const { byName, dietary, songRequest, addedGuests } = await getPartyRsvps(
+    const { byName, songRequest, addedGuests } = await getPartyRsvps(
       sheets,
       guest.partyId,
       officialNames
@@ -52,6 +52,7 @@ exports.handler = async (event) => {
       return {
         name: p.name,
         attending: existing ? existing.attending : null,
+        dietary: existing ? existing.dietary : '',
       };
     });
 
@@ -62,7 +63,6 @@ exports.handler = async (event) => {
         found: true,
         partyId: guest.partyId,
         members,
-        dietary,
         songRequest,
         // Only solo parties are offered the "add a guest" option.
         canAddGuests: party.length === 1,
