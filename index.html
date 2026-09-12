@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sylvia & Alec's New Years Special</title>
+<title>New Years Eve with Sylvia and Alec</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;700;900&family=Playfair+Display:ital,wght@0,300;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;700;900&family=Playfair+Display:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
+  --burgundy: #461722;
+  --burgundy-light: #692b39;
   --gold: #c3a77c;
   --gold-light: #e0c69f;
   --silver: #d2d3d7;
@@ -28,7 +30,7 @@ html { scroll-behavior: smooth; }
 body {
   background: #000;
   color: #fff;
-  font-family: 'Tenor Sans', sans-serif;
+  font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -61,7 +63,7 @@ body {
 
 .hero-pre {
   font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--w80); margin-bottom: 2.2rem;
+  color: var(--w80); margin-bottom: 2.2rem; line-height: 1.8;
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 .hero-name {
@@ -80,6 +82,7 @@ body {
   color: var(--gold); margin-top: 1.6rem; margin-bottom: 2.4rem; opacity: 0.85;
 }
 .date-row {
+  margin-top: 2.4rem;
   display: inline-flex; align-items: stretch;
   margin-bottom: 1.2rem;
 }
@@ -136,11 +139,11 @@ body {
 .sec-venue { background: #000; padding: 5.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
 .venue-photo {
   width: 100%; max-width: 440px; margin: 0 auto 2.5rem;
-  border-radius: 14px; overflow: hidden; aspect-ratio: 4/3;
+  border-radius: 0; overflow: hidden; aspect-ratio: 4/3;
 }
 .venue-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: saturate(0.65) brightness(0.9);
+  filter: grayscale(1) brightness(0.9);
 }
 .venue-name {
   font-family: var(--font-display);
@@ -156,7 +159,7 @@ body {
   display: inline-block; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--silver); background: transparent; border: 0.5px solid var(--silver); border-radius: 100px;
   padding: 0.85rem 2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s;
-  font-family: 'Tenor Sans', sans-serif; cursor: pointer;
+  font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; cursor: pointer;
 }
 .pill:hover { border-color: #fff; background: var(--w08); }
 
@@ -174,13 +177,18 @@ body {
 /* ── FAQ ────────────────────────────────── */
 .sec-faq { background: #000; border-top: 0.5px solid var(--w05); padding: 5.5rem 2rem; text-align: center; }
 .faq-rows { max-width: 600px; margin: 0 auto; text-align: left; }
-.faq-row { padding: 2rem 0; border-bottom: 0.5px solid var(--w08); }
+.faq-row { padding: 0; border-bottom: 0.5px solid var(--w08); }
 .faq-row:last-child { border-bottom: none; }
 .faq-q {
   font-family: var(--font-display); font-size: clamp(18px, 5vw, 24px);
   font-weight: 400; text-transform: uppercase; letter-spacing: -0.055em; color: #fff; margin-bottom: 0.6rem;
 }
-.faq-a { font-size: 16px; color: var(--w80); line-height: 1.8; letter-spacing: 0.02em; }
+.faq-q { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 0; margin-bottom: 0; cursor: pointer; list-style: none; }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after { content: '+'; flex: 0 0 auto; font-family: Avenir, sans-serif; font-size: 24px; color: var(--silver); }
+.faq-row[open] > .faq-q::after { content: '−'; }
+.faq-q:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+.faq-a { padding-bottom: 1.5rem; font-size: 16px; color: var(--w80); line-height: 1.8; letter-spacing: 0.02em; }
 
 /* ── PHOTO BACKGROUNDS ────────────────── */
 /* Fixed background photos behind the darker sections, so they hold in
@@ -200,16 +208,24 @@ body {
 .bg-urn        { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-05.jpg'); }
 .bg-goldengate { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-06.jpg'); }
 
+/* New Year's morning */
+.sec-brunch { background: var(--burgundy); padding: 5.5rem 2rem; text-align: center; }
+.sec-brunch .sec-title { margin-bottom: 1.5rem; }
+.brunch-copy { max-width: 520px; margin: 0 auto; font-size: 18px; line-height: 1.8; color: var(--w80); }
+.brunch-date { margin-bottom: 1.25rem; color: var(--gold-light); font-size: 16px; letter-spacing: 0.12em; }
+.pill:hover { background: var(--burgundy); }
+.hero-overlay { background: linear-gradient(to bottom, rgba(70,23,34,0.45), rgba(0,0,0,0.1) 45%, #000 100%); }
+
 /* ── RSVP SECTION ─────────────────────── */
 .sec-rsvp { background: #000; padding: 6rem 2rem 7rem; text-align: center; border-top: 0.5px solid var(--w05); }
 .rsvp-please {
-  font-family: var(--font-display);
-  font-size: clamp(64px, 20vw, 120px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: -0.055em; line-height: 0.9; color: #fff;
+  font-family: 'Playfair Display', serif; font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300; font-style: italic; color: var(--silver); line-height: 1; margin-bottom: 0.6rem;
 }
 .rsvp-word {
-  font-family: 'Playfair Display', serif; font-size: clamp(56px, 18vw, 108px);
-  font-weight: 300; font-style: italic; color: var(--silver); line-height: 0.95; margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(64px, 20vw, 120px); font-weight: 400;
+  text-transform: uppercase; letter-spacing: -0.055em; line-height: 0.9; color: #fff; margin-bottom: 1rem;
 }
 .rsvp-deadline { font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); margin-bottom: 3rem; }
 
@@ -339,7 +355,7 @@ body {
 
 .other-input {
   background: transparent; border: none; border-bottom: 0.5px solid var(--w15);
-  color: #fff; font-family: 'Tenor Sans', sans-serif; font-size: 16px;
+  color: #fff; font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; font-size: 16px;
   letter-spacing: 0.12em; outline: none; padding: 0 0 2px; width: 130px; transition: border-color 0.2s;
 }
 .other-input:focus { border-bottom-color: var(--gold); }
@@ -348,7 +364,7 @@ body {
 .song-input {
   width: 100%; background: transparent; border: none;
   border-bottom: 0.5px solid var(--w15); color: #fff;
-  font-family: 'Tenor Sans', sans-serif; font-size: 16px;
+  font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; font-size: 16px;
   letter-spacing: 0.1em; outline: none; padding: 0 0 0.6rem; transition: border-color 0.2s;
 }
 .song-input:focus { border-bottom-color: var(--gold); }
@@ -359,7 +375,7 @@ body {
   display: inline-block; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
   color: #000; background: var(--gold); border-radius: 100px;
   padding: 1rem 2.4rem; text-decoration: none; transition: background 0.25s;
-  border: none; cursor: pointer; font-family: 'Tenor Sans', sans-serif;
+  border: none; cursor: pointer; font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif;
 }
 .pill-gold:hover:not(:disabled) { background: var(--gold-light); }
 .pill-gold:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -417,11 +433,10 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
     alt="Bride and groom detail with bouquet">
   <div class="hero-overlay"></div>
   <div class="hero-inner">
-    <p class="hero-pre">You are invited to celebrate</p>
+    <p class="hero-pre">You are invited to celebrate<br>New Years Eve with</p>
     <span class="hero-name">Sylvia</span>
-    <span class="hero-amp">&amp;</span>
+    <span class="hero-amp">and</span>
     <span class="hero-name">Alec</span>
-    <div class="hero-tag">New Years Special</div>
     <div class="date-row">
       <div class="date-cell">
         <span class="dc-label">Thursday</span>
@@ -453,7 +468,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   </div>
   <div class="venue-name">Alila Marea<br>Beach Resort</div>
   <div class="venue-address">2100 N Coast Highway 101<br>Encinitas, California &nbsp;92024</div>
-  <p class="venue-desc">Perched above the Pacific on a seaside bluff, with natural stone, warm wood, and the endless California horizon. The perfect place to watch one year become the next.</p>
+  <p class="venue-desc">We’re lucky to celebrate at Alila Marea Beach Resort, where our brother-in-law is Chef de Cuisine at VAGA. It makes this beautiful place even more special to us.</p>
   <a class="pill" href="https://maps.google.com/?q=Alila+Marea+Beach+Resort+Encinitas+CA" target="_blank" rel="noopener">Google Maps</a>
 </section>
 
@@ -477,10 +492,18 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   </div>
 </section>
 
+<!-- New Year's Day brunch -->
+<section class="sec-brunch" id="brunch">
+  <span class="sec-accent">the next morning</span>
+  <h2 class="sec-title">Brunch</h2>
+  <p class="brunch-date">January 1, 2027</p>
+  <p class="brunch-copy">Join us for New Year’s Day brunch at Alila Marea Beach Resort. We’d love to start the new year with you!</p>
+</section>
+
 <!-- ── RSVP ───────────────────────────── -->
 <section class="sec-rsvp sec-photo-bg bg-urn" id="rsvp">
-  <div class="rsvp-please">Please</div>
-  <div class="rsvp-word">rsvp</div>
+  <div class="rsvp-please">please</div>
+  <div class="rsvp-word">RSVP</div>
   <div class="rsvp-deadline">Before December 1, 2026</div>
 
   <div class="rsvp-form">
@@ -559,46 +582,46 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   <span class="sec-accent">the</span>
   <div class="sec-title">FAQ</div>
   <div class="faq-rows">
-    <div class="faq-row">
-      <h3 class="faq-q">What is the dress code?</h3>
+    <details class="faq-row">
+      <summary class="faq-q">What is the dress code?</summary>
       <p class="faq-a">Black tie optional. We’d love for everyone to dress up with us! Tuxedos and gowns are welcome, but suits and cocktail or formal dresses are perfect too.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Is this a wedding?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Is this a wedding?</summary>
       <p class="faq-a">Not really!</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Will the celebration be indoors or outdoors?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Will the celebration be indoors or outdoors?</summary>
       <p class="faq-a">The celebration will take place primarily indoors, with some outdoor spaces available throughout the evening. We recommend bringing a layer for the cooler coastal weather.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Can I bring a plus one?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Can I bring a plus one?</summary>
       <p class="faq-a"><strong>Yes!</strong> Everyone is welcome to bring a plus one. Please be sure to include your guest’s name when you RSVP.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Are children invited?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Are children invited?</summary>
       <p class="faq-a"><strong>Of course!</strong> The littlest important people in our lives are invited too. Please include them when you RSVP.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Will dinner be served?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Will dinner be served?</summary>
       <p class="faq-a">Yes! Dinner, drinks, and plenty of late-night celebrating will be provided.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Is there parking or valet?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Is there parking or valet?</summary>
       <p class="faq-a">Yes, valet parking will be available at the resort.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Where should I stay?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Where should I stay?</summary>
       <p class="faq-a">We have reserved a room block at <strong>Alila Marea Beach Resort</strong> at a rate of <strong>$349+ per night</strong>, with a two-night minimum stay. Please note that the room rate does not include the 10% room tax, $55 nightly resort fee, or $60 nightly overnight parking fee.</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">Do you have a registry?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">Do you have a registry?</summary>
       <p class="faq-a">No!</p>
-    </div>
-    <div class="faq-row">
-      <h3 class="faq-q">What time will the reception end?</h3>
+    </details>
+    <details class="faq-row">
+      <summary class="faq-q">What time will the reception end?</summary>
       <p class="faq-a">The celebration will officially wrap up at <strong>12:30 AM</strong>, after we ring in 2027 together!</p>
-    </div>
+    </details>
   </div>
 </section>
 
@@ -780,7 +803,7 @@ function openForm() {
   document.getElementById('party-members').innerHTML = currentParty.members.map((m, i) => `
     <div class="member-card" data-member-index="${i}">
       <div class="member-name">${m.name}</div>
-      <div class="member-q">Will ${m.name.split(' ')[0]} be joining us on Saturday Dec 31st?</div>
+      <div class="member-q">Will ${m.name.split(' ')[0]} be joining us on Thursday, December 31st?</div>
       <div class="radio-group">
         <label class="radio-item"><input type="radio" name="attend-${i}" value="yes" ${m.attending === true ? 'checked' : ''}> Yes</label>
         <label class="radio-item"><input type="radio" name="attend-${i}" value="no" ${m.attending === false ? 'checked' : ''}> No</label>
@@ -971,7 +994,7 @@ if ('IntersectionObserver' in window) {
       animation.onfinish = () => activeEntrances.delete(animation);
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.hero-inner, .sec-title, .venue-photo, .venue-name, .d-row, .rsvp-please, .faq-row, .cd-wrap, .cd-tagline')
+  document.querySelectorAll('.hero-inner, .sec-title, .venue-photo, .venue-name, .d-row, .rsvp-word, .faq-row, .cd-wrap, .cd-tagline')
     .forEach(element => entrances.observe(element));
 }
 
