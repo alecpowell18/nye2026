@@ -1,6 +1,6 @@
 const { norm, checkEnv, getSheetsClient, findParty, getPartyRsvps } = require('./_sheets');
 
-exports.handler = async (event) => {
+async function saveRsvp(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -12,9 +12,13 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const partyId = String(data.partyId || '').trim();
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request' }) };
+  const partyId = typeof data.partyId === 'string' ? data.partyId.trim() : '';
   const responses = Array.isArray(data.responses) ? data.responses : [];
-  const songRequest = data.songRequest || '';
+  const songRequest = typeof data.songRequest === 'string' ? data.songRequest.trim() : '';
+  const invalid = responses.some(r => !r || typeof r.name !== 'string' || !r.name.trim() || r.name.length > 200 || typeof r.attending !== 'boolean' || (r.dietary != null && (typeof r.dietary !== 'string' || r.dietary.length > 1000)));
+  if (invalid || songRequest.length > 500) return { statusCode: 400, body: JSON.stringify({ error: 'Please check the guest names and responses.' }) };
+  if (new Set(responses.map(r => norm(r.name))).size !== responses.length) return { statusCode: 400, body: JSON.stringify({ error: 'Please list each guest only once.' }) };
 
   if (!partyId || responses.length === 0) {
     return { statusCode: 400, body: 'Missing partyId or responses' };
@@ -35,6 +39,16 @@ exports.handler = async (event) => {
       return { statusCode: 403, body: JSON.stringify({ error: 'Party not recognized' }) };
     }
     const partyNames = new Set(party.map((p) => norm(p.name)));
+    if ([...partyNames].some(name => !responses.some(r => norm(r.name) === name))) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Please answer for everyone in your party.' }) };
+    }
+    const extras = responses.filter(r => !partyNames.has(norm(r.name)));
+    if (extras.length && (!responses.some(r => partyNames.has(norm(r.name)) && r.attending) || extras.some(r => !r.attending))) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Added guests must accompany an attending member of your party.' }) };
+    }
+    if (responses.some(r => (r.dietary || '').split(',').map(x => x.trim()).includes('None') && (r.dietary || '').split(',').length > 1)) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Choose either no restrictions or specific dietary restrictions.' }) };
+    }
     const { byName } = await getPartyRsvps(sheets, partyId, partyNames);
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
@@ -51,7 +65,7 @@ exports.handler = async (event) => {
       submittedNames.add(norm(name));
 
       const attending = isOfficial ? !!r.attending : true; // added guests always accompany the host
-      const dietary = String(r.dietary || '').trim() || 'None';
+      const dietary = attending ? String(r.dietary || '').trim() || 'None' : 'None';
       const notes = !isOfficial && r.baby ? 'Baby' : '';
       const row = [timestamp, partyId, name, attending ? 'YES' : 'NO', dietary, songRequest, notes];
       const existing = byName[norm(name)];
@@ -61,7 +75,7 @@ exports.handler = async (event) => {
           sheets.spreadsheets.values.update({
             spreadsheetId: process.env.SHEET_ID,
             range: `RSVPs!A${existing.rowNumber}:G${existing.rowNumber}`,
-            valueInputOption: 'USER_ENTERED',
+            valueInputOption: 'RAW',
             resource: { values: [row] },
           })
         );
@@ -87,7 +101,7 @@ exports.handler = async (event) => {
       await sheets.spreadsheets.values.append({
         spreadsheetId: process.env.SHEET_ID,
         range: 'RSVPs!A:G',
-        valueInputOption: 'USER_ENTERED',
+        valueInputOption: 'RAW',
         resource: { values: appends },
       });
     }
@@ -104,4 +118,20 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: 'Failed to save RSVP' }),
     };
   }
+};
+
+// Serialize saves for a party in this warm function instance. Existing-sheet
+// lookups also make completed retries update rows rather than append them.
+// Cross-instance serialization still requires a shared durable coordinator.
+const pending = new Map();
+exports.handler = async event => {
+  let key;
+  try { key = JSON.parse(event.body)?.partyId; } catch { return saveRsvp(event); }
+  if (typeof key !== 'string' || !key.trim()) return saveRsvp(event);
+  key = key.trim();
+  const previous = pending.get(key) || Promise.resolve();
+  const current = previous.catch(() => {}).then(() => saveRsvp(event));
+  pending.set(key, current);
+  try { return await current; }
+  finally { if (pending.get(key) === current) pending.delete(key); }
 };

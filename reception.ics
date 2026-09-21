@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sylvia and Alec//NYE Reception//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:nye2026-reception@sylviaandalec.com
+DTSTAMP:20260921T000000Z
+DTSTART:20270101T020000Z
+DTEND:20270101T083000Z
+SUMMARY:New Year's Eve with Sylvia and Alec
+LOCATION:Alila Marea Beach Resort\, 2100 N Coast Highway 101\,
+ Encinitas CA 92024
+DESCRIPTION:Dinner\, drinks and dancing to ring in 2027.\nBlack tie
+  optional. Details: https://sylviaandalec.com/
+URL:https://sylviaandalec.com/
+END:VEVENT
+END:VCALENDAR

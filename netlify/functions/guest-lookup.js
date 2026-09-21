@@ -12,6 +12,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request' }) };
   const firstName = String(data.firstName || '').trim();
   const lastName = String(data.lastName || '').trim();
   if (!firstName || !lastName) {

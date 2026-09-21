@@ -176,7 +176,7 @@ body {
 }
 .pill {
   display: inline-block; font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--silver); background: transparent; border: 0.5px solid var(--silver); border-radius: 100px;
+  color: var(--silver); background: transparent; border: 0.5px solid var(--silver); border-radius: 3px;
   padding: 0.85rem 2rem; text-decoration: none; transition: background 0.25s, border-color 0.25s;
   font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; cursor: pointer;
 }
@@ -207,7 +207,7 @@ body {
 .faq-q::after { content: '+'; flex: 0 0 auto; font-family: Avenir, sans-serif; font-size: 24px; color: var(--silver); }
 .faq-row[open] > .faq-q::after { content: '−'; }
 .faq-q:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
-.faq-a { padding-bottom: 1.5rem; font-size: var(--text-body); color: var(--w80); line-height: 1.26; letter-spacing: 0.02em; }
+.faq-a { padding-bottom: 1.5rem; font-size: var(--text-body); color: var(--w80); line-height: 1.45; letter-spacing: 0.02em; }
 .faq-a a, .venue-desc a { color: var(--gold); text-decoration: underline; transition: color 0.2s; }
 .faq-a a:hover, .venue-desc a:hover { color: var(--gold-light); }
 
@@ -232,7 +232,7 @@ body {
 /* New Year's morning */
 .sec-brunch { background: #080808; padding: 5.5rem 2rem; text-align: center; }
 .sec-brunch .sec-title { margin-bottom: 0.735rem; }
-.brunch-copy { max-width: 520px; margin: 0 auto; font-size: var(--text-body); line-height: 1.26; color: var(--w80); }
+.brunch-copy { max-width: 520px; margin: 0 auto; font-size: var(--text-body); line-height: 1.45; color: var(--w80); }
 .brunch-date { margin-bottom: 1.25rem; color: var(--gold-light); font-size: var(--text-body); letter-spacing: 0.12em; }
 
 /* ── RSVP SECTION ─────────────────────── */
@@ -388,7 +388,7 @@ body {
 /* Submit */
 .pill-gold {
   display: inline-block; font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase;
-  color: #000; background: var(--gold); border-radius: 100px;
+  color: #000; background: var(--gold); border-radius: 3px;
   padding: 1rem 2.4rem; text-decoration: none; transition: background 0.25s;
   border: none; cursor: pointer; font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif;
 }
@@ -412,10 +412,8 @@ body {
 .success-sub { font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
 
 /* ── FOOTER ──────────────────────────── */
+.footer-monogram { display: block; width: 80px; max-width: 25vw; height: auto; margin: 0 auto; }
 footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(--w05); }
-.footer-yr { font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.12); margin-bottom: 0.5rem; }
-.footer-mono { font-family: var(--font-display); font-size: var(--text-body); font-weight: 400; letter-spacing: -0.055em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
-.footer-mono .a { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(184,150,96,0.22); }
 
 /* ── ANIMATIONS ──────────────────────── */
 @keyframes fadeUp {
@@ -450,7 +448,7 @@ section[id] { scroll-margin-top: 5rem; }
 .venue-address { text-transform: none; letter-spacing: .02em; }
 .sec-stay { padding: 5rem 2rem; background: #0b0b0b; text-align: center; }
 .sec-stay .sec-title { font-size: var(--text-heading); margin-bottom: 0.735rem; }
-.stay-copy { max-width: 560px; margin: 0 auto 1.5rem; font-size: var(--text-body); line-height: 1.26; color: var(--w80); }
+.stay-copy { max-width: 560px; margin: 0 auto 1.5rem; font-size: var(--text-body); line-height: 1.45; color: var(--w80); }
 .faq-q, .step-q { font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; text-transform: none; letter-spacing: 0; line-height: 1.2; font-size: var(--text-body); }
 .member-q, .field-label, .field-label-sm, .radio-item, .check-item, .name-result, .success-sub { text-transform: none; letter-spacing: .01em; }
 .field-label-sm, .member-dietary .check-item, .added-guest-row .check-item { font-size: var(--text-body); }
@@ -470,6 +468,47 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   .cd-num { font-size: var(--text-number); min-width: 0; }
   .cd-colon { font-size: 28px; }
   .cd-lbl { letter-spacing: 0; font-size: var(--text-body); }
+}
+/* Details and saved response */
+.details-rows { max-width: 1100px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 2rem; }
+.d-row { border-bottom: 0; padding: 1rem; }
+.d-row + .d-row { border-left: 1px solid var(--w15); }
+.site-nav a { position: relative; }
+.site-nav a::after { content: ''; position: absolute; bottom: 4px; left: 0; right: 0; height: 1px; background: var(--gold-light); transform: scaleX(0); transition: transform 200ms ease; }
+.site-nav a[aria-current="location"]::after { transform: scaleX(1); }
+.response-summary { text-align: left; margin: 2rem 0; }
+.response-summary ul { list-style: none; }
+.response-summary li { border-bottom: 1px solid var(--w15); padding: 1rem 0; line-height: 1.4; }
+.response-summary p { margin-top: 1rem; line-height: 1.4; }
+.summary-detail { display: block; color: var(--w80); margin-top: .4rem; }
+.calendar-link[hidden] { display: none; }
+.calendar-link { display: inline-block; margin-top: 1.5rem; }
+@media (max-width: 700px) {
+  .details-rows { grid-template-columns: 1fr; gap: 0; }
+  .d-row + .d-row { border-left: 0; border-top: 1px solid var(--w15); }
+}
+@media (prefers-reduced-motion: reduce) { .site-nav a::after { transition: none; } }
+.pill:hover, .pill-gold:hover { transform: translateY(-1px); box-shadow: none; }
+.pill, .pill-gold { max-width: 100%; white-space: normal; }
+.site-nav a:focus-visible { outline: 2px solid var(--silver); outline-offset: 3px; }
+.faq-row[open] .faq-a { animation: faqReveal 180ms ease-out; }
+@keyframes faqReveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.remove-guest-btn { width: 44px; height: 44px; top: 1rem; right: 0; }
+.added-guest-row .name-row { padding-right: 3.25rem; }
+.sec-title, .rsvp-word { overflow-wrap: anywhere; }
+@media (max-width: 400px) {
+  .site-nav { display: grid; grid-template-columns: repeat(2, auto); gap: 0 1.5rem; }
+  .site-nav a { justify-content: center; }
+  section[id] { scroll-margin-top: 8rem; }
+  .added-guest-row .name-row { flex-direction: column; gap: .5rem; }
+  .date-cell { padding-inline: .3rem; }
+  .dc-label { letter-spacing: .02em; }
+  .cd-wrap { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .cd-colon { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-row[open] .faq-a { animation: none; }
+  .pill:hover, .pill-gold:hover { transform: none; }
 }
 </style>
 </head>
@@ -587,20 +626,9 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
           <input class="rsvp-input" id="last-name-input" type="text" autocomplete="family-name" spellcheck="false">
         </div>
       </div>
-      <div class="name-result" id="search-result"></div>
+      <div class="name-result" id="search-result" role="status" aria-live="polite"></div>
       <div class="submit-wrap">
         <button class="pill-gold" id="btn-find">Find My RSVP</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Party found -->
-    <div class="rsvp-step hidden" id="step-party">
-      <div class="party-card">
-        <div class="party-names" id="party-names"></div>
-        <button class="pill-gold" id="btn-rsvp-here">RSVP here</button>
-      </div>
-      <div class="submit-wrap">
-        <button class="pill" id="btn-back-to-search" type="button">Back to Search</button>
       </div>
     </div>
 
@@ -617,13 +645,13 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
       </div>
 
       <div class="form-field">
-        <label class="field-label">Song request</label>
+        <label class="field-label" for="song-request">Song request</label>
         <input type="text" id="song-request" class="song-input" placeholder="What'll get you on the dance floor?">
       </div>
 
       <div class="submit-wrap">
         <button class="pill-gold" id="btn-submit">Submit RSVP</button>
-        <div class="form-error" id="form-error">Something went wrong. Please try again.</div>
+        <div class="form-error" id="form-error" role="alert">Something went wrong. Please try again.</div>
       </div>
       <div class="submit-wrap">
         <button class="pill" id="btn-search-again" type="button">Search Again</button>
@@ -634,9 +662,11 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
     <div class="rsvp-step hidden" id="step-success" style="text-align:center; padding: 2rem 0;">
       <div class="success-icon">✦</div>
       <div class="success-hed">Thank you!</div>
-      <div class="success-sub" style="margin-top:1rem;">Your RSVP has been received. We can't wait to celebrate with you!</div>
+      <div class="success-sub" id="confirmation-message" style="margin-top:1rem;">Your RSVP has been saved.</div>
+      <div id="response-summary" class="response-summary"></div>
+      <a class="pill calendar-link" href="reception.ics" download>Add to calendar</a>
       <div class="submit-wrap">
-        <button class="pill" id="btn-update-response" type="button">Update Response</button>
+        <button class="pill" id="btn-update-response" type="button">Edit response</button>
       </div>
     </div>
 
@@ -694,7 +724,8 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 <!-- ── COUNTDOWN ───────────────────────── -->
 <section class="sec-countdown sec-photo-bg bg-columns">
   <span class="sec-accent">the</span>
-  <div class="sec-title">Countdown</div>
+  <div class="sec-title" id="countdown-title">Countdown</div>
+
   <div class="cd-wrap">
     <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><div class="cd-lbl">Days</div></div>
     <span class="cd-colon">:</span>
@@ -713,8 +744,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 
 <!-- ── FOOTER ─────────────────────────── -->
 <footer>
-  <div class="footer-yr">2026 &nbsp;→&nbsp; 2027</div>
-  <div class="footer-mono">S <span class="a">&amp;</span> A</div>
+  <img class="footer-monogram" src="images/as-monogram.png" alt="Sylvia and Alec monogram" width="1254" height="1254" loading="lazy">
 </footer>
 
 <script>
@@ -753,7 +783,7 @@ function dietaryFieldHtml() {
         <label class="check-item"><input type="checkbox" value="Nut allergy"> Nut allergy</label>
         <label class="check-item">
           <input type="checkbox" value="Other" class="chk-other"> Other:
-          <input type="text" class="other-input" placeholder="please specify">
+          <input type="text" class="other-input" aria-label="Other dietary restrictions" placeholder="please specify">
         </label>
       </div>
     </div>
@@ -793,7 +823,10 @@ function getDietaryValue(container) {
 // ── Step helpers ──────────────────────────
 function showStep(id) {
   document.querySelectorAll('.rsvp-step').forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+  const step = document.getElementById(id);
+  step.classList.remove('hidden');
+  step.tabIndex = -1;
+  step.focus({ preventScroll: true });
 }
 
 // ── Step 1: Find your RSVP ────────────────
@@ -808,6 +841,7 @@ btnFind.addEventListener('click', () => findParty());
 });
 
 async function findParty() {
+  if (btnFind.disabled) return;
   const firstName = firstNameInput.value.trim();
   const lastName  = lastNameInput.value.trim();
 
@@ -826,9 +860,13 @@ async function findParty() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ firstName, lastName }),
     });
+    if (!res.ok) throw new Error('Lookup unavailable');
     data = await res.json();
   } catch {
-    data = null;
+    currentParty = null;
+    searchResult.textContent = 'We couldn’t connect. Please try again in a moment.';
+    btnFind.disabled = false;
+    return;
   }
 
   btnFind.disabled = false;
@@ -842,24 +880,12 @@ async function findParty() {
       addedGuests: (data.addedGuests || []).map(g => ({ ...splitName(g.name), baby: g.baby, dietary: g.dietary || '' })),
     };
     searchResult.innerHTML = '';
-    document.getElementById('party-names').innerHTML =
-      currentParty.members.map(m => escapeHtml(m.name)).join('<br>');
-    showStep('step-party');
+    openForm();
   } else {
     currentParty = null;
     searchResult.innerHTML = `<span class="name-not-found">We couldn't find that name.<br>Please double-check spelling</span>`;
   }
 }
-
-document.getElementById('btn-back-to-search').addEventListener('click', () => {
-  showStep('step-search');
-});
-
-// ── Step 2: Party found → open form ───────
-document.getElementById('btn-rsvp-here').addEventListener('click', () => {
-  if (!currentParty) return;
-  openForm();
-});
 
 function openForm() {
   const firstMember = currentParty.members[0]?.name.split(' ')[0] || '';
@@ -910,8 +936,8 @@ function makeAddedGuestRow(firstName = '', lastName = '', baby = false, dietary 
   row.innerHTML = `
     <button class="remove-guest-btn" type="button" aria-label="Remove guest">&times;</button>
     <div class="name-row">
-      <div class="name-field"><input type="text" class="rsvp-input added-first" placeholder="First" value="${escapeHtml(firstName)}"></div>
-      <div class="name-field"><input type="text" class="rsvp-input added-last" placeholder="Last" value="${escapeHtml(lastName)}"></div>
+      <div class="name-field"><input type="text" class="rsvp-input added-first" aria-label="Guest first name" placeholder="First" value="${escapeHtml(firstName)}"></div>
+      <div class="name-field"><input type="text" class="rsvp-input added-last" aria-label="Guest last name" placeholder="Last" value="${escapeHtml(lastName)}"></div>
     </div>
     <label class="added-guest-baby"><input type="checkbox" class="added-baby" ${baby ? 'checked' : ''}> Baby</label>
     ${dietaryFieldHtml()}
@@ -919,6 +945,7 @@ function makeAddedGuestRow(firstName = '', lastName = '', baby = false, dietary 
   setDietaryValues(row, dietary);
   row.querySelector('.remove-guest-btn').addEventListener('click', () => {
     row.remove();
+    document.getElementById('btn-add-guest').focus();
 
   });
   return row;
@@ -926,7 +953,9 @@ function makeAddedGuestRow(firstName = '', lastName = '', baby = false, dietary 
 
 document.getElementById('btn-add-guest').addEventListener('click', () => {
   const list = document.getElementById('added-guests-list');
-  list.appendChild(makeAddedGuestRow());
+  const row = makeAddedGuestRow();
+  list.appendChild(row);
+  row.querySelector('.added-first').focus();
 });
 
 document.getElementById('btn-search-again').addEventListener('click', () => {
@@ -947,6 +976,7 @@ document.getElementById('btn-submit').addEventListener('click', () => submitRsvp
 async function submitRsvp() {
   const errEl = document.getElementById('form-error');
   const btnEl = document.getElementById('btn-submit');
+  if (btnEl.disabled || !currentParty) return;
   errEl.style.display = 'none';
 
   const picks = currentParty.members.map((m, i) => document.querySelector(`input[name="attend-${i}"]:checked`));
@@ -989,6 +1019,15 @@ async function submitRsvp() {
   }));
 
   const responses = [...officialResponses, ...addedResponses];
+  const names = responses.map(response => norm(response.name));
+  if (new Set(names).size !== names.length) {
+    errEl.textContent = 'Please list each guest only once.';
+    errEl.style.display = 'block'; return;
+  }
+  if (addedGuests.length && !officialResponses.some(response => response.attending)) {
+    errEl.textContent = 'Added guests must accompany an attending member of your party. Please remove added guests if your party cannot attend.';
+    errEl.style.display = 'block'; return;
+  }
 
   btnEl.textContent = 'Sending…';
   btnEl.disabled = true;
@@ -1005,15 +1044,17 @@ async function submitRsvp() {
         songRequest,
       }),
     });
-    if (!res.ok) throw new Error('Server error');
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'We couldn’t save your RSVP. Please try again.');
 
     currentParty.members = officialResponses;
     currentParty.addedGuests = addedGuests;
     currentParty.songRequest = songRequest;
 
+    renderConfirmation(responses, songRequest);
     showStep('step-success');
-  } catch {
-    errEl.textContent = 'Something went wrong. Please try again.';
+  } catch (error) {
+    errEl.textContent = error.message || 'We couldn’t save your RSVP. Please try again.';
     errEl.style.display = 'block';
   } finally {
     btnEl.textContent = 'Submit RSVP';
@@ -1021,12 +1062,55 @@ async function submitRsvp() {
   }
 }
 
+// Keep mutually exclusive dietary options consistent for every guest.
+document.getElementById('rsvp').addEventListener('change', event => {
+  const input = event.target;
+  if (!input.matches('.checkbox-group input[type="checkbox"]') || !input.checked) return;
+  const group = input.closest('.checkbox-group');
+  group.querySelectorAll('input[type="checkbox"]').forEach(other => {
+    if (other !== input && (input.value === 'None' || other.value === 'None')) other.checked = false;
+  });
+  if (input.value === 'None') group.querySelector('.other-input').value = '';
+});
+function renderConfirmation(responses, songRequest) {
+  const attending = responses.some(response => response.attending);
+  document.getElementById('confirmation-message').textContent = attending
+    ? 'Your RSVP has been saved. We can’t wait to celebrate with you!'
+    : 'Your response has been saved. We’ll miss you!';
+  document.getElementById('response-summary').innerHTML = '<ul>' + responses.map(response =>
+    `<li>${escapeHtml(response.name)}<span class="summary-detail">${response.attending ? 'Attending' : 'Not attending'}${response.baby ? ' · Baby' : ''}${response.attending ? ' · Dietary: ' + escapeHtml(response.dietary || 'None') : ''}</span></li>`
+  ).join('') + '</ul>' + (songRequest ? `<p>Song request: ${escapeHtml(songRequest)}</p>` : '');
+  document.querySelector('.calendar-link').hidden = !attending;
+}
+// Follow the current section without altering browser history.
+const navLinks = [...document.querySelectorAll('.site-nav a')];
+let navFramePending = false;
+function updateActiveNavigation() {
+  navFramePending = false;
+  const threshold = document.querySelector('.site-nav').getBoundingClientRect().bottom + 80;
+  let active = null;
+  navLinks.forEach(link => {
+    const section = document.querySelector(link.getAttribute('href'));
+    if (section.getBoundingClientRect().top <= threshold) active = link;
+  });
+  navLinks.forEach(link => {
+    if (link === active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+function queueNavigationUpdate() {
+  if (!navFramePending) { navFramePending = true; requestAnimationFrame(updateActiveNavigation); }
+}
+window.addEventListener('scroll', queueNavigationUpdate, { passive: true });
+window.addEventListener('resize', queueNavigationUpdate);
+updateActiveNavigation();
+
 // ── Countdown ────────────────────────────
-const TARGET = new Date('2026-12-31T18:00:00-08:00');
+const TARGET = new Date('2027-01-01T00:00:00-08:00');
 function pad(n, w) { return String(n).padStart(w, '0'); }
 function tick() {
-  const diff = TARGET - Date.now();
-  if (diff <= 0) return;
+  const diff = Math.max(0, TARGET - Date.now());
+  if (diff === 0) document.getElementById('countdown-title').textContent = 'Happy New Year!';
   const d = Math.floor(diff / 86400000);
   const h = Math.floor((diff % 86400000) / 3600000);
   const m = Math.floor((diff % 3600000) / 60000);
