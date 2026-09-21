@@ -64,8 +64,8 @@ exports.handler = async (event) => {
         partyId: guest.partyId,
         members,
         songRequest,
-        // Only solo parties are offered the "add a guest" option.
-        canAddGuests: party.length === 1,
+        // All recognized parties may add guests.
+        canAddGuests: true,
         addedGuests,
       }),
     };

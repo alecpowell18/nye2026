@@ -1,4 +1,4 @@
-const { norm, checkEnv, getSheetsClient, findParty, getPartyRsvps, MAX_ADDED_GUESTS } = require('./_sheets');
+const { norm, checkEnv, getSheetsClient, findParty, getPartyRsvps } = require('./_sheets');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -35,26 +35,20 @@ exports.handler = async (event) => {
       return { statusCode: 403, body: JSON.stringify({ error: 'Party not recognized' }) };
     }
     const partyNames = new Set(party.map((p) => norm(p.name)));
-    // Only solo invites may add guests who aren't on the Guests tab
-    // (e.g. a plus-one or a baby), and only up to the cap.
-    const canAddGuests = party.length === 1;
-
     const { byName } = await getPartyRsvps(sheets, partyId, partyNames);
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
     const updates = [];
     const appends = [];
-    let addedCount = 0;
+    const submittedNames = new Set();
 
     responses.forEach((r) => {
       const name = String(r.name || '').trim();
       if (!name) return;
 
       const isOfficial = partyNames.has(norm(name));
-      if (!isOfficial) {
-        if (!canAddGuests || addedCount >= MAX_ADDED_GUESTS) return;
-        addedCount++;
-      }
+      if (submittedNames.has(norm(name))) return;
+      submittedNames.add(norm(name));
 
       const attending = isOfficial ? !!r.attending : true; // added guests always accompany the host
       const dietary = String(r.dietary || '').trim() || 'None';
@@ -75,6 +69,18 @@ exports.handler = async (event) => {
         appends.push(row);
       }
     });
+
+    // Mark removed added guests as declined so they do not reappear on reload.
+    for (const [name, existing] of Object.entries(byName)) {
+      if (!partyNames.has(name) && !submittedNames.has(name)) {
+        updates.push(sheets.spreadsheets.values.update({
+          spreadsheetId: process.env.SHEET_ID,
+          range: `RSVPs!D${existing.rowNumber}`,
+          valueInputOption: 'RAW',
+          resource: { values: [['NO']] },
+        }));
+      }
+    }
 
     if (updates.length) await Promise.all(updates);
     if (appends.length) {

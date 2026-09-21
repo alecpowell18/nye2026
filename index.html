@@ -29,8 +29,8 @@
   --gold-light: #e0c69f;
   --silver: #d2d3d7;
   --w80: rgba(255,255,255,0.80);
-  --w50: rgba(255,255,255,0.50);
-  --w30: rgba(255,255,255,0.30);
+  --w50: rgba(255,255,255,0.80);
+  --w30: rgba(255,255,255,0.72);
   --w15: rgba(255,255,255,0.15);
   --w08: rgba(255,255,255,0.08);
   --w05: rgba(255,255,255,0.05);
@@ -78,6 +78,7 @@ body {
   color: var(--w80); margin-bottom: 2.2rem; line-height: 1.8;
   text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
+.hero-names { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .hero-name {
   font-family: var(--font-display);
   font-size: clamp(80px, 24vw, 140px); font-weight: 400;
@@ -87,7 +88,7 @@ body {
 .hero-amp {
   font-family: 'Playfair Display', serif;
   font-size: clamp(28px, 8vw, 52px); font-weight: 300; font-style: italic;
-  color: var(--silver); display: block; margin: 0.15em 0; line-height: 1;
+  color: var(--silver); display: block; margin: 0; transform: translateY(-0.12em); line-height: 1;
 }
 .hero-tag {
   font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -115,14 +116,15 @@ body {
 
 /* ── COUNTDOWN ─────────────────────────── */
 .sec-countdown { background: #080808; padding: 5.5rem 2rem; text-align: center; }
-.sec-accent {
-  font-family: 'Playfair Display', serif; font-size: clamp(20px, 6vw, 34px);
-  font-weight: 300; font-style: italic; color: var(--silver); display: block; line-height: 1;
+.sec-accent, .rsvp-please {
+  font-family: 'Playfair Display', serif; font-size: clamp(24px, 6vw, 36px);
+  font-weight: 300; font-style: italic; color: var(--silver); display: block;
+  line-height: 1; margin-bottom: 0.6rem;
 }
 .sec-title {
   font-family: var(--font-display);
   font-size: clamp(52px, 16vw, 100px); font-weight: 400;
-  text-transform: uppercase; letter-spacing: -0.055em; color: #fff; line-height: 0.88; margin-bottom: 3rem;
+  text-transform: uppercase; letter-spacing: -0.055em; color: #fff; line-height: 0.9; margin-bottom: 3rem;
 }
 .cd-wrap {
   display: flex; align-items: flex-start; justify-content: center;
@@ -201,8 +203,8 @@ body {
 .faq-row[open] > .faq-q::after { content: '−'; }
 .faq-q:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
 .faq-a { padding-bottom: 1.5rem; font-size: 16px; color: var(--w80); line-height: 1.8; letter-spacing: 0.02em; }
-.faq-a a { color: var(--gold); text-decoration: underline; transition: color 0.2s; }
-.faq-a a:hover { color: var(--gold-light); }
+.faq-a a, .venue-desc a { color: var(--gold); text-decoration: underline; transition: color 0.2s; }
+.faq-a a:hover, .venue-desc a:hover { color: var(--gold-light); }
 
 /* ── PHOTO BACKGROUNDS ────────────────── */
 /* Fixed background photos behind the darker sections, so they hold in
@@ -230,10 +232,6 @@ body {
 
 /* ── RSVP SECTION ─────────────────────── */
 .sec-rsvp { background: #000; padding: 6rem 2rem 7rem; text-align: center; border-top: 0.5px solid var(--w05); }
-.rsvp-please {
-  font-family: 'Playfair Display', serif; font-size: clamp(24px, 6vw, 36px);
-  font-weight: 300; font-style: italic; color: var(--silver); line-height: 1; margin-bottom: 0.6rem;
-}
 .rsvp-word {
   font-family: var(--font-display);
   font-size: clamp(64px, 20vw, 120px); font-weight: 400;
@@ -434,9 +432,46 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   * { animation: none !important; transition: none !important; }
   .pill:hover, .pill-gold:hover { transform: none; }
 }
+
+/* Invitation layout and readable guest information. */
+section[id] { scroll-margin-top: 5rem; }
+.site-nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: clamp(1rem, 4vw, 3rem); padding: 0.45rem 1rem; background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--w08); }
+.site-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.site-nav a:hover, .site-nav a:focus-visible { color: var(--gold-light); }
+.hero-rsvp { display: inline-block; margin-top: 1.8rem; }
+.venue-layout { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; text-align: left; }
+.venue-photo { max-width: none; margin: 0; aspect-ratio: 5/6; }
+.venue-desc { max-width: none; margin: 1.5rem 0 2rem; }
+.venue-address { text-transform: none; letter-spacing: .02em; }
+.sec-stay { padding: 5rem 2rem; background: #0b0b0b; text-align: center; }
+.sec-stay .sec-title { font-size: clamp(42px, 8vw, 72px); margin-bottom: 1.5rem; }
+.stay-copy { max-width: 560px; margin: 0 auto 1.5rem; font-size: 18px; line-height: 1.75; color: var(--w80); }
+.stay-fees { max-width: 560px; margin: 0 auto 2rem; font-size: 16px; line-height: 1.7; color: var(--w80); }
+.faq-q, .step-q { font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; text-transform: none; letter-spacing: 0; line-height: 1.4; font-size: 20px; }
+.member-q, .field-label, .field-label-sm, .radio-item, .check-item, .name-result, .success-sub { text-transform: none; letter-spacing: .01em; }
+.field-label-sm, .member-dietary .check-item, .added-guest-row .check-item { font-size: 16px; }
+.rsvp-form { max-width: 560px; }
+.party-card, .member-card, .added-guest-row { border: 0; border-top: 1px solid var(--w15); border-radius: 0; padding: 1.5rem 0; }
+.radio-item, .check-item { min-height: 44px; }
+.radio-item input[type="radio"], .check-item input[type="checkbox"], .added-guest-baby input[type="checkbox"] { width: 22px; height: 22px; }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+.name-field { min-width: 0; }
+.other-input { width: auto; min-width: 0; flex: 1; }
+.brunch-update { color: var(--silver); margin-top: 1.2rem; font-size: 16px; }
+@media (max-width: 700px) {
+  .venue-layout { grid-template-columns: 1fr; text-align: center; }
+  .venue-photo { aspect-ratio: 4/3; }
+  .venue-desc { margin-inline: auto; }
+  .site-nav { gap: 1.25rem; }
+  .cd-wrap { gap: 4px; }
+  .cd-num { font-size: clamp(32px, 10vw, 44px); min-width: 0; }
+  .cd-colon { font-size: 28px; }
+  .cd-lbl { letter-spacing: 0; font-size: 16px; }
+}
 </style>
 </head>
 <body>
+<nav class="site-nav" aria-label="Main navigation"><a href="#evening">The Details</a><a href="#stay">Stay</a><a href="#faq">FAQs</a><a href="#rsvp">RSVP</a></nav>
 
 <!-- ── HERO ──────────────────────────── -->
 <section class="hero">
@@ -446,9 +481,11 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   <div class="hero-overlay"></div>
   <div class="hero-inner">
     <p class="hero-pre">You are invited to celebrate<br>New Year’s Eve with</p>
-    <span class="hero-name">Sylvia</span>
-    <span class="hero-amp">and</span>
-    <span class="hero-name">Alec</span>
+    <div class="hero-names">
+      <span class="hero-name">Sylvia</span>
+      <span class="hero-amp">and</span>
+      <span class="hero-name">Alec</span>
+    </div>
     <div class="date-row">
       <div class="date-cell">
         <span class="dc-label">Thursday</span>
@@ -467,6 +504,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
       </div>
     </div>
     <div class="hero-venue">Alila Marea Beach Resort &nbsp;·&nbsp; Encinitas, CA</div>
+    <a class="pill hero-rsvp" href="#rsvp">RSVP</a>
   </div>
 </section>
 
@@ -474,18 +512,30 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 <section class="sec-venue">
   <span class="sec-accent">the</span>
   <div class="sec-title">Venue</div>
+  <div class="venue-layout">
   <div class="venue-photo">
     <img src="images/venue-alila-marea.jpg"
       alt="Alila Marea Beach Resort">
   </div>
+  <div class="venue-copy">
   <div class="venue-name">Alila Marea<br>Beach Resort</div>
   <div class="venue-address">2100 N Coast Highway 101<br>Encinitas, California &nbsp;92024</div>
-  <p class="venue-desc">We’re lucky to celebrate at Alila Marea Beach Resort, where our brother-in-law is Chef de Cuisine at VAGA. It makes this beautiful place even more special to us.</p>
-  <a class="pill" href="https://maps.google.com/?q=Alila+Marea+Beach+Resort+Encinitas+CA" target="_blank" rel="noopener">Google Maps</a>
+  <p class="venue-desc">Fun fact: our brother-in-law is the Chef de Cuisine at <a href="https://vagarestaurant.com/" target="_blank" rel="noopener noreferrer">VAGA</a>, the resort’s restaurant!</p>
+  <a class="pill" href="https://maps.google.com/?q=Alila+Marea+Beach+Resort+Encinitas+CA" target="_blank" rel="noopener">Get directions</a>
+  </div>
+  </div>
+</section>
+
+<section class="sec-stay" id="stay">
+  <span class="sec-accent">make a weekend of it</span>
+  <h2 class="sec-title">Stay the night</h2>
+  <p class="stay-copy">We’ve reserved a room block at Alila Marea Beach Resort for $349+ per night, with a two-night minimum stay.</p>
+  <p class="stay-fees">The rate excludes 10% room tax, a $27 nightly resort fee, and $60 nightly overnight parking.</p>
+  <a class="pill" href="https://www.hyatt.com/events/en-US/group-booking/SANEN/G-APSR" target="_blank" rel="noopener noreferrer">Book your stay</a>
 </section>
 
 <!-- ── DETAILS ─────────────────────────── -->
-<section class="sec-details sec-photo-bg bg-vows">
+<section class="sec-details sec-photo-bg bg-vows" id="evening">
   <span class="sec-accent">the</span>
   <div class="sec-title">Details</div>
   <div class="details-rows">
@@ -510,6 +560,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
   <h2 class="sec-title">Brunch</h2>
   <p class="brunch-date">January 1, 2027</p>
   <p class="brunch-copy">Join us for New Year’s Day brunch at Alila Marea Beach Resort. We’d love to start the new year with you!</p>
+  <p class="brunch-update">Details will be updated soon.</p>
 </section>
 
 <!-- ── RSVP ───────────────────────────── -->
@@ -620,7 +671,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
     </details>
     <details class="faq-row">
       <summary class="faq-q">Is there parking or valet?</summary>
-      <p class="faq-a">Yes, valet parking is available at the resort for $18 per vehicle for guests attending the wedding.<br><br>Overnight guests: $60 per night, including in-and-out privileges.</p>
+      <p class="faq-a">Yes, valet parking is available at the resort for $18 per vehicle for guests attending the event.<br><br>Overnight guests: $60 per night, including in-and-out privileges.</p>
     </details>
     <details class="faq-row">
       <summary class="faq-q">Where should I stay?</summary>
@@ -669,7 +720,6 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 // checked by the guest-lookup function; nothing about who's invited
 // ships to the browser.
 let currentParty = null; // { partyId, members, dietary, songRequest, canAddGuests, addedGuests }
-const MAX_ADDED_GUESTS = 1; // mirrors the server-side cap in netlify/functions/_sheets.js
 
 function norm(s) { return String(s || '').toLowerCase().trim().replace(/\s+/g, ' '); }
 
@@ -790,7 +840,7 @@ async function findParty() {
     };
     searchResult.innerHTML = '';
     document.getElementById('party-names').innerHTML =
-      currentParty.members.map(m => m.name).join('<br>');
+      currentParty.members.map(m => escapeHtml(m.name)).join('<br>');
     showStep('step-party');
   } else {
     currentParty = null;
@@ -814,8 +864,8 @@ function openForm() {
 
   document.getElementById('party-members').innerHTML = currentParty.members.map((m, i) => `
     <div class="member-card" data-member-index="${i}">
-      <div class="member-name">${m.name}</div>
-      <div class="member-q">Will ${m.name.split(' ')[0]} be joining us on Thursday, December 31st?</div>
+      <div class="member-name">${escapeHtml(m.name)}</div>
+      <div class="member-q">Will ${escapeHtml(m.name.split(' ')[0])} be joining us on Thursday, December 31st?</div>
       <div class="radio-group">
         <label class="radio-item"><input type="radio" name="attend-${i}" value="yes" ${m.attending === true ? 'checked' : ''}> Yes</label>
         <label class="radio-item"><input type="radio" name="attend-${i}" value="no" ${m.attending === false ? 'checked' : ''}> No</label>
@@ -827,16 +877,20 @@ function openForm() {
   currentParty.members.forEach((m, i) => {
     const card = document.querySelector(`.member-card[data-member-index="${i}"]`);
     setDietaryValues(card, m.dietary);
+    const dietary = card.querySelector('.member-dietary');
+    const updateDietary = () => { dietary.hidden = !card.querySelector('input[value="yes"]:checked'); };
+    card.querySelectorAll('input[type="radio"]').forEach(input => input.addEventListener('change', updateDietary));
+    updateDietary();
   });
 
-  // Solo invites can bring along someone not on the guest list (plus-one, baby, etc).
+  // Registered parties may add their partners and children.
   const addedField = document.getElementById('added-guests-field');
   const addedList  = document.getElementById('added-guests-list');
   addedList.innerHTML = '';
   if (currentParty.canAddGuests) {
     addedField.classList.remove('hidden');
     currentParty.addedGuests.forEach(g => addedList.appendChild(makeAddedGuestRow(g.firstName, g.lastName, g.baby, g.dietary)));
-    refreshAddGuestButton();
+
   } else {
     addedField.classList.add('hidden');
   }
@@ -862,22 +916,14 @@ function makeAddedGuestRow(firstName = '', lastName = '', baby = false, dietary 
   setDietaryValues(row, dietary);
   row.querySelector('.remove-guest-btn').addEventListener('click', () => {
     row.remove();
-    refreshAddGuestButton();
+
   });
   return row;
 }
 
-function refreshAddGuestButton() {
-  const list = document.getElementById('added-guests-list');
-  const btn = document.getElementById('btn-add-guest');
-  btn.classList.toggle('hidden', list.children.length >= MAX_ADDED_GUESTS);
-}
-
 document.getElementById('btn-add-guest').addEventListener('click', () => {
   const list = document.getElementById('added-guests-list');
-  if (list.children.length >= MAX_ADDED_GUESTS) return;
   list.appendChild(makeAddedGuestRow());
-  refreshAddGuestButton();
 });
 
 document.getElementById('btn-search-again').addEventListener('click', () => {
@@ -913,7 +959,7 @@ async function submitRsvp() {
     return {
       name: m.name,
       attending: picks[i].value === 'yes',
-      dietary: getDietaryValue(card),
+      dietary: picks[i].value === 'yes' ? getDietaryValue(card) : 'None',
     };
   });
 

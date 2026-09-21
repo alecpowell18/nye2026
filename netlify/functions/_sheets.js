@@ -57,11 +57,6 @@ async function findParty(sheets, partyId) {
   return guests.filter((g) => g.partyId === partyId);
 }
 
-// Solo parties (exactly one registered name) may bring along guests who
-// aren't on the Guests tab (e.g. a plus-one or a baby); capped so the
-// feature can't be used to smuggle in an unbounded number of extra invites.
-const MAX_ADDED_GUESTS = 1;
-
 // RSVPs!A:G = Timestamp, PartyID, Name, Attending, Dietary, SongRequest, Notes.
 // One row per person; dietary is per-person, song request is shared across
 // the party and duplicated onto each person's row for simplicity.
@@ -88,7 +83,7 @@ async function getPartyRsvps(sheets, partyId, officialNames) {
       dietary: row[4] || '',
     };
     if (row[5]) songRequest = row[5];
-    if (!officialNames.has(norm(name))) {
+    if (!officialNames.has(norm(name)) && row[3] === 'YES') {
       addedGuests.push({ name, baby: (row[6] || '').toLowerCase() === 'baby', dietary: row[4] || '' });
     }
   });
@@ -103,5 +98,4 @@ module.exports = {
   findGuestByName,
   findParty,
   getPartyRsvps,
-  MAX_ADDED_GUESTS,
 };
