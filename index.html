@@ -248,6 +248,7 @@ body {
 .rsvp-form { max-width: 400px; margin: 0 auto; text-align: left; }
 
 .rsvp-step { animation: fadeUp 0.35s ease both; }
+#step-success { animation: none; }
 .hidden { display: none; }
 
 .step-q {
@@ -827,6 +828,16 @@ function showStep(id) {
   step.classList.remove('hidden');
   step.tabIndex = -1;
   step.focus({ preventScroll: true });
+  if (id === 'step-success') {
+    // Keep the confirmation visible below the navigation, including when it wraps.
+    requestAnimationFrame(() => {
+      const navHeight = document.querySelector('.site-nav').getBoundingClientRect().height;
+      window.scrollTo({
+        top: Math.max(0, window.scrollY + step.getBoundingClientRect().top - navHeight - 16),
+        behavior: 'instant',
+      });
+    });
+  }
 }
 
 // ── Step 1: Find your RSVP ────────────────
