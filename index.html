@@ -108,10 +108,10 @@ body {
   padding: 0.7rem 0.6rem;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
 }
-.dc-label { font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
+.dc-label { font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--w30); }
 .dc-val {
   font-family: var(--font-display); letter-spacing: -0.055em;
-  font-size: var(--text-number); font-weight: 400; color: #fff; line-height: 1;
+  font-size: clamp(1.75rem, 7vw, 2.125rem); font-weight: 400; color: #fff; line-height: 1;
 }
 .hero-venue {
   font-size: var(--text-body); letter-spacing: 0.12em; text-transform: uppercase;
@@ -439,7 +439,7 @@ footer { padding: 2.5rem 2rem; text-align: center; border-top: 0.5px solid var(-
 
 /* Invitation layout and readable guest information. */
 section[id] { scroll-margin-top: 5rem; }
-.site-nav { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 clamp(.75rem, 3vw, 2rem); padding: 0.45rem 1rem; background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--w08); }
+.site-nav { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 clamp(1rem, 4vw, 3rem); padding: 0.45rem 1rem; background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--w08); }
 .site-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); text-decoration: none; font-size: var(--text-body); letter-spacing: 0.06em; text-transform: uppercase; }
 .site-nav a:hover, .site-nav a:focus-visible { color: var(--gold-light); }
 .hero-rsvp { display: inline-block; margin-top: 1.8rem; }
@@ -464,7 +464,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   .venue-layout { grid-template-columns: 1fr; text-align: center; }
   .venue-photo { aspect-ratio: 4/3; }
   .venue-desc { margin-inline: auto; }
-  .site-nav { gap: 0 .75rem; padding-inline: .5rem; }
+  .site-nav { gap: 0 1.25rem; padding-inline: .5rem; }
   .cd-wrap { gap: 4px; flex-wrap: wrap; }
   .cd-num { font-size: var(--text-number); min-width: 0; }
   .cd-colon { font-size: 28px; }
@@ -498,7 +498,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 .added-guest-row .name-row { padding-right: 3.25rem; }
 .sec-title, .rsvp-word { overflow-wrap: anywhere; }
 @media (max-width: 400px) {
-  .site-nav { display: grid; grid-template-columns: repeat(2, auto); gap: 0 1.5rem; }
+  .site-nav { display: grid; grid-template-columns: repeat(2, auto); gap: 0 2rem; }
   .site-nav a { justify-content: center; }
   section[id] { scroll-margin-top: 8rem; }
   .added-guest-row .name-row { flex-direction: column; gap: .5rem; }
@@ -514,7 +514,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 </style>
 </head>
 <body>
-<nav class="site-nav" aria-label="Main navigation"><a href="#evening">The Details</a><a href="#stay">Stay</a><a href="#rsvp">RSVP</a><a href="#faq">FAQs</a></nav>
+<nav class="site-nav" aria-label="Main navigation"><a href="#evening">Details</a><a href="#stay">Stay</a><a href="#rsvp">RSVP</a><a href="#faq">FAQs</a></nav>
 
 <!-- ── HERO ──────────────────────────── -->
 <section class="hero">
