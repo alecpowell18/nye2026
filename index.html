@@ -68,7 +68,7 @@ body {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
-  opacity: 0.32; filter: saturate(0.5) brightness(0.7);
+  opacity: 0.32; filter: brightness(0.7);
 }
 .hero-overlay {
   position: absolute; inset: 0;
@@ -162,7 +162,7 @@ body {
 }
 .venue-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: grayscale(1) brightness(0.9);
+  filter: brightness(0.65);
 }
 .venue-name {
   font-family: var(--font-display);
@@ -181,6 +181,16 @@ body {
   font-family: Avenir, 'Avenir Next', Helvetica, Arial, sans-serif; cursor: pointer;
 }
 .pill:hover { border-color: #fff; background: var(--w08); }
+
+.story-gallery { max-width: 1100px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.5rem); align-items: center; }
+.story-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; object-position: center; border-radius: 0; filter: saturate(1.1) sepia(.08) contrast(.97); }
+@media (max-width: 700px) {
+  .story-gallery { display: flex; max-width: 440px; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: 1rem; scrollbar-width: thin; scrollbar-color: var(--silver) #222; }
+  .story-gallery img { flex: 0 0 88%; width: 88%; min-width: 0; scroll-snap-align: start; }
+  .story-gallery:focus-visible { outline: 2px solid var(--silver); outline-offset: 6px; }
+}
+.sec-story { padding: 4.5rem 2rem; background: #080808; text-align: center; }
+.story-copy { max-width: 620px; margin: 0 auto; font-size: var(--text-body); line-height: 1.45; color: var(--w80); }
 
 /* ── DETAILS ──────────────────────────── */
 .sec-details { background: #070707; border-top: 0.5px solid var(--w08); padding: 5.5rem 2rem; text-align: center; }
@@ -225,7 +235,7 @@ body {
   .sec-photo-bg { background-attachment: scroll; }
 }
 .bg-columns { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-02.jpg'); }
-.bg-vows { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-03.jpg'); }
+.bg-vows { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-dancing-color.jpg'); }
 .bg-urn        { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-05.jpg'); }
 .bg-goldengate { background-image: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)), url('images/couple-06.jpg'); }
 
@@ -471,8 +481,9 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   .cd-lbl { letter-spacing: 0; font-size: var(--text-body); }
 }
 /* Details and saved response */
-.details-rows { max-width: 1100px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 2rem; }
-.d-row { border-bottom: 0; padding: 1rem; }
+.details-rows { max-width: 1100px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; }
+.d-row { min-width: 0; border-bottom: 0; padding: 1.25rem clamp(1rem, 2.5vw, 2rem); }
+.details-rows .d-val { letter-spacing: .06em; overflow-wrap: break-word; }
 .d-row + .d-row { border-left: 1px solid var(--w15); }
 .site-nav a { position: relative; }
 .site-nav a::after { content: ''; position: absolute; bottom: 4px; left: 0; right: 0; height: 1px; background: var(--gold-light); transform: scaleX(0); transition: transform 200ms ease; }
@@ -511,6 +522,23 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   .faq-row[open] .faq-a { animation: none; }
   .pill:hover, .pill-gold:hover { transform: none; }
 }
+.venue-main-photo { max-width: 900px; aspect-ratio: 16/9; margin: 0 auto 2rem; }
+.venue-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; min-width: 0; }
+.venue-gallery .venue-photo { aspect-ratio: 4/3; }
+@media (max-width: 700px) {
+  .venue-main-photo { aspect-ratio: 16/9; margin-bottom: 1rem; }
+  .venue-gallery { gap: 1rem; }
+}
+/* Equal countdown columns and balanced closing lines. */
+.cd-wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.5rem, 2vw, 1.5rem); max-width: 640px; margin-inline: auto; }
+.cd-unit { min-width: 0; position: relative; }
+.cd-num { min-width: 0; }
+.cd-lbl { margin-top: .75rem; font-size: clamp(.875rem, 2.6vw, 1.125rem); letter-spacing: .02em; }
+.cd-unit + .cd-unit::before { content: ':'; position: absolute; right: calc(100% + clamp(.5rem, 2vw, 1.5rem) / 2); transform: translateX(50%); top: 0; font-size: var(--text-number); line-height: 1; color: var(--silver); }
+.cd-tagline { display: flex; flex-direction: column; align-items: center; gap: .65rem; }
+.cd-tagline .cd-sub, .cd-tagline .cd-big { margin: 0; line-height: 1.15; }
+.cd-tagline .cd-big { margin-top: -.35rem; }
+@media (max-width: 400px) { .cd-unit + .cd-unit::before { display: none; } }
 </style>
 </head>
 <body>
@@ -551,6 +579,17 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   </div>
 </section>
 
+<section class="sec-story" id="our-story" aria-labelledby="story-title">
+  <span class="sec-accent">our</span>
+  <h2 class="sec-title" id="story-title">Story</h2>
+  <p class="story-copy">Surprise! We got married last year, nearly 10 years after we first met at Stanford in 2016. Alec proposed to Sylvia on December 29, 2023, at Torrey Pines. Exactly two years later, we decided to elope at San Francisco City Hall, in the first city we called “home” together. It was a beautiful, intimate ceremony and a day that will always be so special to us. Now, a year later, we’re inviting our closest friends and family to San Diego to celebrate our new home (kinda), our marriage, and ring in the new year together.</p>
+  <div class="story-gallery" role="region" tabindex="0" aria-label="Our City Hall wedding photos. On mobile, swipe or use arrow keys to browse.">
+    <img src="images/story-staircase.jpg" width="4672" height="7008" alt="Sylvia and Alec on the grand staircase at San Francisco City Hall" loading="lazy" decoding="async">
+    <img src="images/story-portrait.jpg" width="3152" height="3967" alt="Sylvia and Alec together inside City Hall" loading="lazy" decoding="async">
+    <img src="images/story-city-hall.jpg" width="4672" height="7008" alt="Sylvia and Alec celebrating outside the City Hall doors" loading="lazy" decoding="async">
+  </div>
+</section>
+
 <!-- ── DETAILS ─────────────────────────── -->
 <section class="sec-details sec-photo-bg bg-vows" id="evening">
   <span class="sec-accent">the</span>
@@ -562,7 +601,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
     </div>
     <div class="d-row">
       <div class="d-label">The Evening</div>
-      <div class="d-val">6:00 PM: Cocktail Hour<br>Dinner &amp; Dancing<br>Midnight Toast &amp; Champagne<br>Until 12:30 AM</div>
+      <div class="d-val">Cocktails at 6:00&nbsp;PM<br>Dinner &amp; Dancing<br>Champagne Toast at Midnight<br>Farewells at 12:30&nbsp;AM</div>
     </div>
     <div class="d-row">
       <div class="d-label">Location</div>
@@ -575,10 +614,12 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 <section class="sec-venue">
   <span class="sec-accent">the</span>
   <div class="sec-title">Venue</div>
+  <div class="venue-photo venue-main-photo">
+    <img src="images/venue-exterior.webp" width="2560" height="1440" alt="Daytime view of the Alila Marea entrance and ocean beyond" loading="lazy" decoding="async">
+  </div>
   <div class="venue-layout">
-  <div class="venue-photo">
-    <img src="images/venue-alila-marea.jpg"
-      alt="Alila Marea Beach Resort">
+  <div class="venue-gallery" aria-label="More views of Alila Marea">
+    <div class="venue-photo"><img src="images/venue-coast.jpg" width="1654" height="900" alt="Alila Marea overlooking the beach and Pacific coastline" loading="lazy" decoding="async"></div>
   </div>
   <div class="venue-copy">
   <div class="venue-name">Alila Marea<br>Beach Resort</div>
@@ -719,6 +760,10 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
       <summary class="faq-q">What time will the reception end?</summary>
       <p class="faq-a">The celebration will officially wrap up at 12:30 AM, after we ring in 2027 together!</p>
     </details>
+    <details class="faq-row">
+      <summary class="faq-q">What if I can’t find my RSVP?</summary>
+      <p class="faq-a">We ~vibe coded~ this website thanks to our friends Claude and Codex. Reach out to one of us directly if you have any issues.</p>
+    </details>
   </div>
 </section>
 
@@ -728,12 +773,9 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
   <div class="sec-title" id="countdown-title">Countdown</div>
 
   <div class="cd-wrap">
-    <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><div class="cd-lbl">Days</div></div>
-    <span class="cd-colon">:</span>
+    <div class="cd-unit"><span class="cd-num" id="cd-days">0</span><div class="cd-lbl">Days</div></div>
     <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><div class="cd-lbl">Hours</div></div>
-    <span class="cd-colon">:</span>
     <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><div class="cd-lbl">Minutes</div></div>
-    <span class="cd-colon">:</span>
     <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><div class="cd-lbl">Seconds</div></div>
   </div>
   <div class="cd-tagline">
@@ -1126,7 +1168,7 @@ function tick() {
   const h = Math.floor((diff % 86400000) / 3600000);
   const m = Math.floor((diff % 3600000) / 60000);
   const s = Math.floor((diff % 60000) / 1000);
-  document.getElementById('cd-days').textContent  = pad(d, 3);
+  document.getElementById('cd-days').textContent  = String(d);
   document.getElementById('cd-hours').textContent = pad(h, 2);
   document.getElementById('cd-mins').textContent  = pad(m, 2);
   document.getElementById('cd-secs').textContent  = pad(s, 2);
