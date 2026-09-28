@@ -182,8 +182,10 @@ body {
 }
 .pill:hover { border-color: #fff; background: var(--w08); }
 
-.story-gallery { max-width: 1100px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.5rem); align-items: center; }
-.story-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; object-position: center; border-radius: 0; filter: saturate(1.1) sepia(.08) contrast(.97); }
+.story-gallery { max-width: 1100px; margin: 2.5rem auto 0; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3rem) / 3); gap: 1.5rem; align-items: center; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; scrollbar-width: thin; scrollbar-color: var(--silver) #222; }
+.story-gallery img { scroll-snap-align: start; display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; object-position: center; border-radius: 0; filter: saturate(1.1) sepia(.08) contrast(.97); }
+.story-gallery .story-dinner { object-position: 43% center; }
+.story-gallery:focus-visible { outline: 2px solid var(--silver); outline-offset: 6px; }
 @media (max-width: 700px) {
   .story-gallery { display: flex; max-width: 440px; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: 1rem; scrollbar-width: thin; scrollbar-color: var(--silver) #222; }
   .story-gallery img { flex: 0 0 88%; width: 88%; min-width: 0; scroll-snap-align: start; }
@@ -191,6 +193,7 @@ body {
 }
 .sec-story { padding: 4.5rem 2rem; background: #080808; text-align: center; }
 .story-copy { max-width: 620px; margin: 0 auto; font-size: var(--text-body); line-height: 1.45; color: var(--w80); }
+.story-copy + .story-copy { margin-top: 1.25rem; }
 
 /* ── DETAILS ──────────────────────────── */
 .sec-details { background: #070707; border-top: 0.5px solid var(--w08); padding: 5.5rem 2rem; text-align: center; }
@@ -539,6 +542,16 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 .cd-tagline .cd-sub, .cd-tagline .cd-big { margin: 0; line-height: 1.15; }
 .cd-tagline .cd-big { margin-top: -.35rem; }
 @media (max-width: 400px) { .cd-unit + .cd-unit::before { display: none; } }
+.venue-composition { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem clamp(2rem, 6vw, 5rem); align-items: center; text-align: left; }
+.venue-images { display: contents; }
+.venue-composition .venue-main-photo { grid-column: 1 / -1; width: 100%; margin: 0 auto; }
+.venue-composition .venue-images > .venue-photo:not(.venue-main-photo) { aspect-ratio: 4/3; }
+@media (max-width: 700px) {
+  .venue-composition { display: block; text-align: center; }
+  .venue-images { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: 1rem; margin-bottom: 2rem; scrollbar-width: thin; scrollbar-color: var(--silver) #222; }
+  .venue-composition .venue-images > .venue-photo { flex: 0 0 88%; width: 88%; margin: 0; aspect-ratio: 4/3; scroll-snap-align: start; }
+  .venue-images:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+}
 </style>
 </head>
 <body>
@@ -580,13 +593,16 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 </section>
 
 <section class="sec-story" id="our-story" aria-labelledby="story-title">
-  <span class="sec-accent">our</span>
-  <h2 class="sec-title" id="story-title">Story</h2>
-  <p class="story-copy">Surprise! We got married last year, nearly 10 years after we first met at Stanford in 2016. Alec proposed to Sylvia on December 29, 2023, at Torrey Pines. Exactly two years later, we decided to elope at San Francisco City Hall, in the first city we called “home” together. It was a beautiful, intimate ceremony and a day that will always be so special to us. Now, a year later, we’re inviting our closest friends and family to San Diego to celebrate our new home (kinda), our marriage, and ring in the new year together.</p>
-  <div class="story-gallery" role="region" tabindex="0" aria-label="Our City Hall wedding photos. On mobile, swipe or use arrow keys to browse.">
+  <span class="sec-accent">life</span>
+  <h2 class="sec-title" id="story-title">Update</h2>
+  <p class="story-copy">Surprise! We're married! Nearly 10 years after we first met at Stanford, we eloped at San Francisco City Hall on December 29, 2025. It was a beautiful, intimate ceremony, exactly two years after Alec proposed to Sylvia at Torrey Pines. The days around New Year’s have become especially meaningful to us. And somehow, in a happy twist of fate, we’ve ended up making a home together in San Diego, one of our favorite places on earth. Now, we’re inviting our closest friends and family to join us here to celebrate our marriage and ring in the new year together.</p>
+  <div class="story-gallery" role="region" tabindex="0" aria-label="Our wedding photos. Scroll, swipe, or use arrow keys to browse.">
     <img src="images/story-staircase.jpg" width="4672" height="7008" alt="Sylvia and Alec on the grand staircase at San Francisco City Hall" loading="lazy" decoding="async">
     <img src="images/story-portrait.jpg" width="3152" height="3967" alt="Sylvia and Alec together inside City Hall" loading="lazy" decoding="async">
     <img src="images/story-city-hall.jpg" width="4672" height="7008" alt="Sylvia and Alec celebrating outside the City Hall doors" loading="lazy" decoding="async">
+    <img src="images/story-balcony.jpg" width="4513" height="6771" alt="Sylvia and Alec overlooking the City Hall rotunda" loading="lazy" decoding="async">
+    <img src="images/story-palace.jpg" width="4672" height="7008" alt="Sylvia and Alec beside the lagoon at the Palace of Fine Arts" loading="lazy" decoding="async">
+    <img class="story-dinner" src="images/story-dinner-toast.jpg" width="5710" height="4283" alt="Sylvia and Alec raising their glasses at dinner" loading="lazy" decoding="async">
   </div>
 </section>
 
@@ -614,11 +630,12 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--silver); ou
 <section class="sec-venue">
   <span class="sec-accent">the</span>
   <div class="sec-title">Venue</div>
+  <div class="venue-composition">
+  <div class="venue-images" role="region" tabindex="0" aria-label="Alila Marea photos. On mobile, swipe or use arrow keys to browse.">
   <div class="venue-photo venue-main-photo">
     <img src="images/venue-exterior.webp" width="2560" height="1440" alt="Daytime view of the Alila Marea entrance and ocean beyond" loading="lazy" decoding="async">
   </div>
-  <div class="venue-layout">
-  <div class="venue-gallery" aria-label="More views of Alila Marea">
+
     <div class="venue-photo"><img src="images/venue-coast.jpg" width="1654" height="900" alt="Alila Marea overlooking the beach and Pacific coastline" loading="lazy" decoding="async"></div>
   </div>
   <div class="venue-copy">
